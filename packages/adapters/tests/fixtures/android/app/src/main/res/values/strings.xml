@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- <string name="commented_out">nope</string> -->
+    <string name="app_name" translatable="false">Acme</string>
+    <string name="quoted">"  Padded  "</string>
+    <string name="with_xliff">Moved <xliff:g id="count" example="5">%1$d</xliff:g> files</string>
+    <string name="cdata"><![CDATA[<font>Bold</font> text]]></string>
+    <string-array name="voices">
+        <item>English</item>
+        <item>Spanish</item>
+    </string-array>
+    <plurals name="pages">
+        <item quantity="one">%1$d page</item>
+        <item quantity="other">%1$d pages</item>
+    </plurals>
+</resources>

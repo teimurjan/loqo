@@ -1,0 +1,407 @@
+{
+  "_id": "690e39881d6a93a1e5469e63",
+  "createdAt": "2025-11-07T18:25:12.559Z",
+  "updatedAt": "2026-03-05T08:53:05.963Z",
+  "disableTranslate": {
+    "ar": false,
+    "bn": false,
+    "pt-br": false,
+    "bg": false,
+    "ca": false,
+    "zh-hans-cn": false,
+    "zh-hans": false,
+    "zh-hant": false,
+    "hr": false,
+    "cs": false,
+    "da": false,
+    "nl": false,
+    "en": false,
+    "et": false,
+    "fi": false,
+    "fr": false,
+    "ka": false,
+    "de": false,
+    "el": false,
+    "he": false,
+    "hi": false,
+    "hu": false,
+    "id": false,
+    "it": false,
+    "ja": false,
+    "ko": false,
+    "lt": false,
+    "ms": false,
+    "es-mx": false,
+    "nb": false,
+    "pl": false,
+    "pt": false,
+    "ro": false,
+    "ru": false,
+    "sk": false,
+    "sl": false,
+    "es": false,
+    "sv": false,
+    "th": false,
+    "tr": false,
+    "uk": false,
+    "ur": false,
+    "vi": false
+  },
+  "title": {
+    "ar": "الإملاء الصوتي",
+    "pt-br": "Digitação por Voz",
+    "bg": "Гласово въвеждане",
+    "zh-hans-cn": "语音输入",
+    "zh-hans": "语音输入",
+    "zh-hant": "語音輸入",
+    "cs": "Hlasové psaní",
+    "da": "Taleindtastning",
+    "nl": "Spraaktypen",
+    "en": "Voice Typing",
+    "fi": "Sanelu",
+    "fr": "Dictée vocale",
+    "ka": "ხმის მიბმა",
+    "de": "Sprachverarbeitung",
+    "hi": "वॉइस टाइपिंग",
+    "hu": "Hangalapú szövegbevitel",
+    "it": "Dettatura vocale",
+    "ja": "音声入力",
+    "ko": "음성 타이핑",
+    "es-mx": "Escritura por voz",
+    "nb": "Talediktering",
+    "pl": "Pisanie głosowe",
+    "pt": "Digitação por voz",
+    "ro": "Dactilografiere vocală",
+    "ru": "Голосовой ввод",
+    "es": "Dictado por voz",
+    "sv": "Röstinmatning",
+    "th": "การพิมพ์ด้วยเสียง",
+    "tr": "Sesli Yazma",
+    "uk": "Голосовий набір тексту",
+    "vi": "Nhập liệu bằng giọng nói"
+  },
+  "slug": "voice-typing",
+  "header": "664336568acc4520665c5bca",
+  "cta": "690e2cdeb882cf2934c20ae3",
+  "seoDescription": {
+    "ar": "اكتشف ميزة الكتابة بالصوت في Acme وكيف تساعدك على زيادة الإنتاجية وتسهيل الوصول، بتحويل الكلام إلى نص لحظيًا للمستخدمين.",
+    "pt-br": "Descubra como a Digitação por Voz do Acme turbina a produtividade e amplia a acessibilidade, convertendo fala em texto na hora.",
+    "bg": "Научете повече за гласовото въвеждане чрез Acme – как повишава продуктивността и подобрява достъпността, като ви позволява веднага да превръщате реч в текст.",
+    "zh-hans-cn": "全面了解 Acme 语音输入，看看它如何帮助你提升工作效率、优化无障碍体验，让你随时随地把说出的内容即时转成文本。",
+    "zh-hans": "全面了解 Acme 语音输入：功能亮点、上手指南与适用场景，如何提升效率、减轻打字负担；支持的平台、准确率与隐私保护，并以即时语音转文字优化无障碍与可访问体验。适合会议记录、写作、客服等多种场景，跨设备同步更省心，助你专注思考，事半功倍。",
+    "zh-hant": "深入了解 Acme 語音輸入：從提升工作效率，到以即時語音轉文字改善無障礙體驗。適用於會議紀錄、筆記、郵件與內容創作，支援多裝置與多語言，走到哪都能輕鬆輸入，全面提升生產力。減少錯字與重複輸入，讓溝通更流暢。也更友善於行動與視覺使用者。",
+    "cs": "Zjistěte, jak Hlasové psaní od Acme zvyšuje produktivitu a zpřístupňuje práci: převádějte řeč na text během chvilky.",
+    "da": "Få det fulde overblik over Acme Taleindtastning – hvordan det kan øge produktiviteten og forbedre tilgængeligheden ved at omdanne tale til tekst straks.",
+    "nl": "Ontdek alles over Acme Spraaktypen: hoe het je productiviteit verhoogt en de toegankelijkheid verbetert door spraak meteen naar tekst om te zetten.",
+    "en": "Learn all about Acme Voice Typing, from how it can boost productivity to improve accessibility by allowing users to turn speech into text instantly.",
+    "fi": "Tutustu Acmen saneluun: näin lisäät tuottavuutta ja parannat saavutettavuutta, kun puhe muuttuu tekstiksi saman tien.",
+    "fr": "Découvrez la dictée vocale de Acme : boostez votre productivité et l’accessibilité en convertissant la parole en texte, instantanément.",
+    "ka": "გაიცანით Acme Voice Typing: წამებში გადააქციეთ ხმა ტექსტად და გაზარდეთ პროდუქტიულობა და ხელმისაწვდომობა.",
+    "de": "Entdecken Sie, wie Acme Sprachverarbeitung Produktivität steigert und Barrierefreiheit fördert, indem Sprache sofort in Text umgewandelt wird.",
+    "hi": "Acme वॉइस टाइपिंग के बारे में जानें—यह कैसे आपकी उत्पादकता बढ़ाता है और आवाज़ को तुरंत टेक्स्ट में बदलकर उपयोगकर्ताओं के लिए सुलभता बढ़ाता है।",
+    "hu": "Ismerje meg a Acme hangalapú szövegbevitelét: hogyan teheti vele hatékonyabbá a munkáját, és javíthatja az akadálymentességet azzal, hogy a beszédet azonnal szöveggé alakítja.",
+    "it": "Scopri tutto sulla dettatura vocale di Acme: aumenta la produttività e l'accessibilità, trasformando la voce in testo all'istante.",
+    "ja": "Acmeの音声入力が生産性をどう高めるか、音声を瞬時にテキスト化してアクセシビリティを向上させるコツ、仕事・学習・メモ取りでの使い方まで、やさしく解説します。設定方法や推奨マイク、誤認識を減らすポイントも紹介します。多言語対応やプライバシー配慮にも触れます。",
+    "ko": "Acme 음성 타이핑으로 말한 내용을 바로 문자로 바꾸세요. 회의 기록, 아이디어 메모, 글쓰기까지 손이 바쁠 때도 빠르게 작성하고 생산성과 접근성을 한층 높이는 요령을 알려드립니다. 초보자도 쉽게 시작할 수 있는 팁과 사용법을 소개합니다.",
+    "es-mx": "Descubre todo sobre la Escritura por voz de Acme, desde cómo puede aumentar tu productividad hasta mejorar la accesibilidad al convertir voz en texto al instante.",
+    "nb": "Lær alt om Acme Talediktering: hvordan det øker produktiviteten og forbedrer tilgjengeligheten ved å la deg gjøre tale om til tekst på et blunk.",
+    "pl": "Poznaj Pisanie głosowe w Acme — zwiększa produktywność i ułatwia dostępność, pozwalając szybko zamieniać mowę na tekst.",
+    "pt": "Conheça o Acme Digitação por Voz e veja como ele aumenta a produtividade e melhora a acessibilidade, transformando sua fala em texto em questão de segundos.",
+    "ro": "Descoperă Dactilografierea Vocală cu Acme: află cum îți poate crește productivitatea și îmbunătăți accesibilitatea, permițându-ți să transformi instant vocea în text.",
+    "ru": "Узнайте всё о голосовом вводе Acme: как он помогает работать продуктивнее и делает контент доступнее, мгновенно превращая речь в текст.",
+    "es": "Descubre todo sobre el dictado por voz de Acme: mejora tu productividad y accesibilidad convirtiendo la voz en texto al instante.",
+    "sv": "Upptäck allt om Acme Röstinmatning – hur det kan höja din produktivitet och förbättra tillgängligheten genom att göra tal till text direkt.",
+    "th": "ครบทุกเรื่องการพิมพ์ด้วยเสียงกับ Acme: ตั้งแต่เพิ่มประสิทธิภาพการทำงานไปจนถึงความเข้าถึง ให้ผู้ใช้แปลงคำพูดเป็นข้อความได้ทันที",
+    "tr": "Acme Sesli Yazma’yı keşfedin; konuşmanızı anında metne çevirerek üretkenliğinizi artırın, herkes için erişilebilirliği kolayca geliştirin.",
+    "uk": "Дізнайтеся все про голосовий набір тексту від Acme: як він допомагає підвищити продуктивність і зробити роботу доступнішою, миттєво перетворюючи мовлення на текст.",
+    "vi": "Khám phá mọi điều về Nhập liệu bằng giọng nói của Acme: từ cách tăng hiệu suất làm việc đến cải thiện khả năng tiếp cận nhờ chuyển giọng nói thành văn bản tức thì."
+  },
+  "robotsMeta": {
+    "index": true,
+    "follow": true
+  },
+  "revision": {
+    "ar": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "pt-br": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "bg": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "zh-hans-cn": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "zh-hans": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "zh-hant": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "cs": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "da": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "nl": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "en": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "fi": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "fr": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "ka": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "de": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "hi": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "hu": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "it": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "ja": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "ko": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "es-mx": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "nb": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "pl": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "pt": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "ro": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "ru": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "es": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "sv": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "th": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "tr": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "uk": "05885145-f134-413d-bf5c-89453f7bff8f",
+    "vi": "05885145-f134-413d-bf5c-89453f7bff8f"
+  },
+  "breadcrumbs": {
+    "ar": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "الإملاء الصوتي",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "pt-br": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Digitação por Voz",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "bg": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Гласово въвеждане",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "zh-hans-cn": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "语音输入",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "zh-hans": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "语音输入",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "zh-hant": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "語音輸入",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "cs": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Hlasové psaní",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "da": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Taleindtastning",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "nl": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Spraaktypen",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "en": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Voice Typing",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "fi": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Sanelu",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "fr": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Dictée vocale",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "ka": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "ხმის მიბმა",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "de": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Sprachverarbeitung",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "hi": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "वॉइस टाइपिंग",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "hu": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Hangalapú szövegbevitel",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "it": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Dettatura vocale",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "ja": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "音声入力",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "ko": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "음성 타이핑",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "es-mx": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Escritura por voz",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "nb": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Talediktering",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "pl": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Pisanie głosowe",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "pt": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Digitação por voz",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "ro": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Dactilografiere vocală",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "ru": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Голосовой ввод",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "es": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Dictado por voz",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "sv": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Röstinmatning",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "th": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "การพิมพ์ด้วยเสียง",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "tr": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Sesli Yazma",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "uk": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Голосовий набір тексту",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ],
+    "vi": [
+      {
+        "doc": "690e39881d6a93a1e5469e63",
+        "url": "/voice-typing",
+        "label": "Nhập liệu bằng giọng nói",
+        "id": "690e39880945e70004c8bb0d"
+      }
+    ]
+  },
+  "__v": 0
+}

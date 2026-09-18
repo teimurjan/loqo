@@ -1,0 +1,158 @@
+name: opendeepl sync
+description: >-
+  Runs one step of a repository's translation loop against an opendeepl project: `request` sends the
+  source strings, `check` reports whether translation is still in flight, `import` writes the
+  translated values back and opens (or updates) a pull request with them. Check this repository out
+  next to yours (`actions/checkout` with `path: .opendeepl`) and point `uses:` at this directory.
+
+inputs:
+  command:
+    description: request, check or import
+    required: true
+  project:
+    description: The platform project's slug
+    required: true
+  base_url:
+    description: The platform's origin, e.g. https://translate.example.com
+    required: true
+  api_key:
+    description: A project API key (editor role for request and import)
+    required: true
+  adapter:
+    description: xcstrings, android-xml or json (request and import)
+    required: false
+    default: ""
+  root:
+    description: Directory the adapter reads and writes, relative to the workspace
+    required: false
+    default: "."
+  include:
+    description: Comma-separated globs overriding the adapter's file patterns
+    required: false
+    default: ""
+  ignore:
+    description: Comma-separated path prefixes to skip
+    required: false
+    default: ""
+  locale_map:
+    description: Comma-separated platform-locale=file-locale pairs, e.g. zh-hans=zh-Hans,pt=pt-BR
+    required: false
+    default: ""
+  source:
+    description: json adapter — the source-locale file
+    required: false
+    default: ""
+  target:
+    description: json adapter — where a locale's file lives, with {locale} substituted
+    required: false
+    default: ""
+  tags:
+    description: json adapter — comma-separated tags for every resource
+    required: false
+    default: ""
+  since:
+    description: import — only translations changed since this ISO-8601 instant
+    required: false
+    default: ""
+  github_token:
+    description: import — token that may push a branch and open a pull request
+    required: false
+    default: ""
+  base_branch:
+    description: import — branch the pull request targets
+    required: false
+    default: ${{ github.event.repository.default_branch }}
+  branch:
+    description: import — the single branch the translations land on, force-pushed on every run
+    required: false
+    default: opendeepl-translations
+  pr_title:
+    description: import — pull request title
+    required: false
+    default: "🌍 Update translations"
+  bot_name:
+    description: import — commit author name
+    required: false
+    default: opendeepl-bot
+  bot_email:
+    description: import — commit author email
+    required: false
+    default: opendeepl-bot@users.noreply.github.com
+
+outputs:
+  ready:
+    description: check — true when nothing is pending, queued or translating
+    value: ${{ steps.sync.outputs.ready }}
+  in_flight:
+    description: check — targets still pending, queued or translating
+    value: ${{ steps.sync.outputs.in_flight }}
+  enqueued:
+    description: request — targets queued for translation
+    value: ${{ steps.sync.outputs.enqueued }}
+  files_updated:
+    description: import — files the adapter rewrote
+    value: ${{ steps.sync.outputs.files_updated }}
+  latest_updated_at:
+    description: import — newest translation applied; pass it back as `since` next time
+    value: ${{ steps.sync.outputs.latest_updated_at }}
+  pr_url:
+    description: import — the pull request, when there was something to commit
+    value: ${{ steps.pr.outputs.pr_url }}
+
+runs:
+  using: composite
+  steps:
+    - uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: 1.3.10
+
+    - name: Install the sync CLI
+      shell: bash
+      working-directory: ${{ github.action_path }}/../../..
+      run: bun install --frozen-lockfile --filter '@opendeepl/adapters'
+
+    - name: ${{ inputs.command }}
+      id: sync
+      shell: bash
+      env:
+        OPENDEEPL_PROJECT: ${{ inputs.project }}
+        OPENDEEPL_BASE_URL: ${{ inputs.base_url }}
+        OPENDEEPL_API_KEY: ${{ inputs.api_key }}
+        CLI: ${{ github.action_path }}/../../../packages/adapters/src/bin.ts
+        COMMAND: ${{ inputs.command }}
+        ADAPTER: ${{ inputs.adapter }}
+        ROOT: ${{ inputs.root }}
+        INCLUDE: ${{ inputs.include }}
+        IGNORE: ${{ inputs.ignore }}
+        LOCALE_MAP: ${{ inputs.locale_map }}
+        SOURCE: ${{ inputs.source }}
+        TARGET: ${{ inputs.target }}
+        TAGS: ${{ inputs.tags }}
+        SINCE: ${{ inputs.since }}
+      run: |
+        args=("$COMMAND" --root "$ROOT")
+        [ -n "$ADAPTER" ] && args+=(--adapter "$ADAPTER")
+        [ -n "$INCLUDE" ] && args+=(--include "$INCLUDE")
+        [ -n "$IGNORE" ] && args+=(--ignore "$IGNORE")
+        [ -n "$LOCALE_MAP" ] && args+=(--locale-map "$LOCALE_MAP")
+        [ -n "$SOURCE" ] && args+=(--source "$SOURCE")
+        [ -n "$TARGET" ] && args+=(--target "$TARGET")
+        [ -n "$TAGS" ] && args+=(--tags "$TAGS")
+        [ -n "$SINCE" ] && args+=(--since "$SINCE")
+        bun "$CLI" "${args[@]}"
+
+    - name: Commit and open a pull request
+      id: pr
+      if: inputs.command == 'import' && steps.sync.outputs.files_updated != '0'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github_token }}
+        FILES: ${{ steps.sync.outputs.files }}
+        ROOT: ${{ inputs.root }}
+        BRANCH: ${{ inputs.branch }}
+        BASE_BRANCH: ${{ inputs.base_branch }}
+        PR_TITLE: ${{ inputs.pr_title }}
+        BOT_NAME: ${{ inputs.bot_name }}
+        BOT_EMAIL: ${{ inputs.bot_email }}
+        WRITTEN: ${{ steps.sync.outputs.written }}
+      run: ${{ github.action_path }}/open-pr.sh

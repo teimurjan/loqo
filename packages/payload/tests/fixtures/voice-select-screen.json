@@ -1,0 +1,2410 @@
+{
+  "_id": "695fa1eef0651128c945fff7",
+  "createdAt": "2026-01-08T12:24:14.228Z",
+  "updatedAt": "2026-03-05T07:48:16.283Z",
+  "disableTranslate": {
+    "ar": false,
+    "bn": false,
+    "pt-br": false,
+    "bg": false,
+    "ca": false,
+    "zh-hans-cn": false,
+    "zh-hans": false,
+    "zh-hant": false,
+    "hr": false,
+    "cs": false,
+    "da": false,
+    "nl": false,
+    "en": false,
+    "et": false,
+    "fi": false,
+    "fr": false,
+    "ka": false,
+    "de": false,
+    "el": false,
+    "he": false,
+    "hi": false,
+    "hu": false,
+    "id": false,
+    "it": false,
+    "ja": false,
+    "ko": false,
+    "lt": false,
+    "ms": false,
+    "es-mx": false,
+    "nb": false,
+    "pl": false,
+    "pt": false,
+    "ro": false,
+    "ru": false,
+    "sk": false,
+    "sl": false,
+    "es": false,
+    "sv": false,
+    "th": false,
+    "tr": false,
+    "uk": false,
+    "ur": false,
+    "vi": false
+  },
+  "internalName": "Localized Choose your starting voice (V4)",
+  "slug": "voices-l-v4",
+  "type": "voice_select",
+  "backgroundImage": "682461ee8766780bb296344a",
+  "header": "68140b3916ccb9cbfa200d3b",
+  "headerText": {
+    "ar": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "اختر الصوت الذي تريد البدء به",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "أكثر من 200 صوتًا متاحًا",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "pt-br": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Escolha uma voz para começar",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Mais de 200 vozes disponíveis",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "bg": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Изберете начален глас",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Над 200 налични гласа",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "zh-hans-cn": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "选择你的首个语音",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "提供超过 200 种语音",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "zh-hans": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "选择你的首选语音",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "提供 200 多种语音",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "zh-hant": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "選擇您的起始語音",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "超過 200 種語音任您挑選",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "cs": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Vyberte si výchozí hlas",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Na výběr máte z více než 200 hlasů",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "da": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Vælg din stemme til at komme i gang",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Over 200 stemmer at vælge imellem",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "nl": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Kies je beginstem",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Kies uit meer dan 200 stemmen",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "en": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Choose your starting voice",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": "ltr",
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "200+ voices available",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": "ltr",
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "fi": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Valitse aloitusääni",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Yli 200 ääntä käytettävissä",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "fr": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Choisissez votre voix de départ",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Plus de 200 voix au choix",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "ka": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "აირჩიეთ საწყისი ხმა",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "ხელმისაწვდომია 200-ზე მეტი ხმა",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "de": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Wybierz głos początkowy",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Ponad 200 głosów do wyboru",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "hi": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "अपनी पसंदीदा शुरुआती आवाज़ चुनें",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "200+ आवाज़ें उपलब्ध",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "hu": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Válassza ki a kezdőhangot",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Több mint 200 hang közül választhat",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "it": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Scegli la voce da cui partire",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Oltre 200 voci tra cui scegliere",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "ja": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "はじめに使う声を選んでください",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "200種類以上の声からお選びいただけます",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "ko": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "시작할 음성을 선택하세요",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "200개 이상의 음성 사용 가능",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "es-mx": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Elige tu voz de bienvenida",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Más de 200 voces disponibles",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "nb": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Velg startstemmen",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Over 200 stemmer å velge mellom",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "pl": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Wybierz głos na start",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Ponad 200 dostępnych głosów",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "pt": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Escolha a voz inicial",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Mais de 200 vozes disponíveis",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "ro": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Alege vocea de început",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Peste 200 de voci disponibile",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "ru": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Выберите голос для начала",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Доступно более 200 голосов",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "es": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Elige tu voz inicial",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Más de 200 voces disponibles",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "sv": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Välj din startröst",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Över 200 röster att välja bland",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "th": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "เลือกเสียงเริ่มต้นของคุณ",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "มีเสียงให้เลือกมากกว่า 200 เสียง",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "tr": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Başlangıç sesinizi seçin",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "200'den fazla ses",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "uk": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Оберіть свій голос для старту",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Понад 200 доступних голосів",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    },
+    "vi": {
+      "root": {
+        "children": [
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Chọn giọng nói khởi đầu của bạn",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "heading",
+            "version": 1,
+            "tag": "h1"
+          },
+          {
+            "children": [
+              {
+                "detail": 0,
+                "format": 0,
+                "mode": "normal",
+                "style": "",
+                "text": "Hơn 200 giọng đọc cho bạn lựa chọn",
+                "type": "text",
+                "version": 1
+              }
+            ],
+            "direction": null,
+            "format": "center",
+            "indent": 0,
+            "type": "paragraph",
+            "version": 1,
+            "textFormat": 0,
+            "textStyle": ""
+          }
+        ],
+        "direction": "ltr",
+        "format": "",
+        "indent": 0,
+        "type": "root",
+        "version": 1
+      }
+    }
+  },
+  "voicePartnershipText": {
+    "ar": "شراكة رسمية مع Acme",
+    "bn": "Official Acme Partnership",
+    "pt-br": "Parceria oficial com a Acme",
+    "bg": "Официален партньор на Acme",
+    "ca": "Official Acme Partnership",
+    "zh-hans-cn": "Acme 官方合作伙伴",
+    "zh-hans": "Acme 官方合作伙伴",
+    "zh-hant": "Acme 官方合作夥伴",
+    "hr": "Official Acme Partnership",
+    "cs": "Oficiální partnerství se službou Acme",
+    "da": "Officielt partnerskab med Acme",
+    "nl": "Officiële samenwerking met Acme",
+    "en": "Official Acme Partnership",
+    "et": "Official Acme Partnership",
+    "fi": "Acmen virallinen yhteistyökumppani",
+    "fr": "Partenariat officiel avec Acme",
+    "ka": "ოფიციალური პარტნიორობა Acme-სთან",
+    "de": "Oficjalne partnerstwo z Acme",
+    "el": "Official Acme Partnership",
+    "he": "Official Acme Partnership",
+    "hi": "आधिकारिक स्पिचिफ़ाई साझेदारी",
+    "hu": "Hivatalos Acme-partnerség",
+    "id": "Official Acme Partnership",
+    "it": "Partnership ufficiale con Acme",
+    "ja": "公式 Acme パートナー",
+    "ko": "공식 Acme 파트너십",
+    "lt": "Official Acme Partnership",
+    "ms": "Official Acme Partnership",
+    "es-mx": "Alianza oficial con Acme",
+    "nb": "Offisielt Acme-partnerskap",
+    "pl": "Oficjalny partner Acme",
+    "pt": "Parceria oficial com a Acme",
+    "ro": "Parteneriat oficial Acme",
+    "ru": "Официальный партнер Acme",
+    "sk": "Official Acme Partnership",
+    "sl": "Official Acme Partnership",
+    "es": "Colaboración oficial con Acme",
+    "sv": "Officiellt partnerskap med Acme",
+    "th": "ความร่วมมืออย่างเป็นทางการกับ Acme",
+    "tr": "Resmi Acme İş Ortaklığı",
+    "uk": "Офіційний партнер Acme",
+    "ur": "Official Acme Partnership",
+    "vi": "Đối tác chính thức của Acme"
+  },
+  "voices": {
+    "ar": [
+      {
+        "voice": "67fe4a262a32c9cf94dc335e",
+        "id": "68e54b3fa73a080004b4029b"
+      },
+      {
+        "voice": "6780b0254e522ab307086508",
+        "id": "68e54b3fa73a080004b4029c"
+      },
+      {
+        "voice": "6780b0254e522ab307086507",
+        "id": "68e54b3fa73a080004b4029e"
+      }
+    ],
+    "pt-br": [
+      {
+        "voice": "6780b0254e522ab3070864fb",
+        "id": "67ad330e6154da00013315bf"
+      },
+      {
+        "voice": "6780b0254e522ab3070864fa",
+        "id": "67ad330e6154da00013315c0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864fd",
+        "id": "67ad330e6154da00013315c1"
+      }
+    ],
+    "bg": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "68e5575b298fdb591e90beee",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "6912392e084ca04edc94c92c",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "zh-hans-cn": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "68e5575b298fdb591e90beee",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "6912392e084ca04edc94c92c",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "zh-hans": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864bb",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864cb",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "zh-hant": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864bb",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864cb",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "cs": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864bb",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864cb",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "da": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864bb",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864cb",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "nl": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864bb",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864cb",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "en": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "68e5575b298fdb591e90beee",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "6912392e084ca04edc94c92c",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "fi": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864bb",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864cb",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "fr": [
+      {
+        "voice": "6780b0254e522ab3070864eb",
+        "id": "67ad330e6154da00013315c4"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ed",
+        "id": "67ad330e6154da00013315c0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ea",
+        "id": "67ad330e6154da00013315c3"
+      }
+    ],
+    "ka": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "68e5575b298fdb591e90beee",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "6912392e084ca04edc94c92c",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "de": [
+      {
+        "voice": "67fe4a0b2a32c9cf94dc32f1",
+        "id": "68e54b3fa73a080004b402ab"
+      },
+      {
+        "voice": "67fe4a0b2a32c9cf94dc32f3",
+        "id": "68e54b3fa73a080004b402ac"
+      },
+      {
+        "voice": "687d607d3c14e78a1f5c5565",
+        "id": "68e54b3fa73a080004b402ad"
+      }
+    ],
+    "hi": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864bb",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864cb",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "hu": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "68e5575b298fdb591e90beee",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "6912392e084ca04edc94c92c",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "it": [
+      {
+        "voice": "6780b0264e522ab307086532",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "6780b0264e522ab30708652f",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0264e522ab307086530",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "ja": [
+      {
+        "voice": "6780b0264e522ab30708653a",
+        "id": "67ad330e6154da00013315bf"
+      },
+      {
+        "voice": "6780b0264e522ab307086538",
+        "id": "67ad330e6154da00013315c0"
+      },
+      {
+        "voice": "6780b0264e522ab30708653d",
+        "id": "67ad330e6154da00013315c1"
+      }
+    ],
+    "ko": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864bb",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864cb",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "es-mx": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "68e5575b298fdb591e90beee",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "6912392e084ca04edc94c92c",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "nb": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864bb",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864cb",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "pl": [
+      {
+        "voice": "6780b0264e522ab30708655a",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "6780b0264e522ab307086559",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0264e522ab307086558",
+        "id": "683ce7b9a1232e00045f69c7"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      }
+    ],
+    "pt": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "68e5575b298fdb591e90beee",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "6912392e084ca04edc94c92c",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "ro": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "68e5575b298fdb591e90beee",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "6912392e084ca04edc94c92c",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "ru": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864bb",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864cb",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "es": [
+      {
+        "voice": "6780b0254e522ab3070864dc",
+        "id": "67ad330e6154da00013315bf"
+      },
+      {
+        "voice": "6780b0254e522ab3070864e1",
+        "id": "67ad330e6154da00013315c0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864e0",
+        "id": "67ad330e6154da00013315c1"
+      }
+    ],
+    "sv": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864bb",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864cb",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "th": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864bb",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864cb",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "tr": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864bb",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864cb",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "uk": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "68e5575b298fdb591e90beee",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "6912392e084ca04edc94c92c",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ],
+    "vi": [
+      {
+        "voice": "6780b0254e522ab3070864ac",
+        "id": "683ce77f7fbd7f2a7a9497ae"
+      },
+      {
+        "voice": "6780b0254e522ab3070864ab",
+        "id": "683ce7867fbd7f2a7a9497af"
+      },
+      {
+        "voice": "68da6627b4d90a0439d0982b",
+        "id": "683ce7917fbd7f2a7a9497b0"
+      },
+      {
+        "voice": "6780b0254e522ab3070864af",
+        "id": "683ce7a4a1232e00045f69c6"
+      },
+      {
+        "voice": "6780b0254e522ab3070864bb",
+        "id": "683ce7ae7fbd7f2a7a9497b3"
+      },
+      {
+        "voice": "6780b0254e522ab3070864cb",
+        "id": "683ce7b9a1232e00045f69c7"
+      }
+    ]
+  },
+  "revision": {
+    "ar": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "pt-br": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "bg": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "zh-hans-cn": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "zh-hans": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "zh-hant": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "cs": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "da": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "nl": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "en": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "fi": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "fr": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "ka": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "de": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "hi": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "hu": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "it": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "ja": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "ko": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "es-mx": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "nb": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "pl": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "pt": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "ro": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "ru": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "es": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "sv": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "th": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "tr": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "uk": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b",
+    "vi": "2f56da10-b5ae-4d0f-b91d-6727b9940a2b"
+  },
+  "__v": 0
+}

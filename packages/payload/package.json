@@ -1,0 +1,89 @@
+{
+  "name": "@opendeepl/payload",
+  "version": "0.1.0",
+  "description": "opendeepl adapter and plugin for Payload CMS: documents in, translations back, inside your app.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "bun": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./lexical": {
+      "bun": "./src/lexical.ts",
+      "types": "./dist/lexical.d.ts",
+      "default": "./dist/lexical.js"
+    },
+    "./client": {
+      "bun": "./src/client.tsx",
+      "types": "./dist/client.d.ts",
+      "default": "./dist/client.js"
+    },
+    "./rsc": {
+      "bun": "./src/rsc.tsx",
+      "types": "./dist/rsc.d.ts",
+      "default": "./dist/rsc.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "bun build.ts"
+  },
+  "dependencies": {
+    "@opendeepl/sdk": "workspace:*"
+  },
+  "peerDependencies": {
+    "@lexical/headless": ">=0.30",
+    "@lexical/html": ">=0.30",
+    "@payloadcms/next": "^3.0.0",
+    "@payloadcms/richtext-lexical": "^3.0.0",
+    "@payloadcms/ui": "^3.0.0",
+    "jsdom": ">=24",
+    "lexical": ">=0.30",
+    "payload": "^3.0.0",
+    "react": ">=19"
+  },
+  "peerDependenciesMeta": {
+    "@lexical/headless": {
+      "optional": true
+    },
+    "@lexical/html": {
+      "optional": true
+    },
+    "@payloadcms/next": {
+      "optional": true
+    },
+    "@payloadcms/richtext-lexical": {
+      "optional": true
+    },
+    "@payloadcms/ui": {
+      "optional": true
+    },
+    "jsdom": {
+      "optional": true
+    },
+    "lexical": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@lexical/headless": "0.41.0",
+    "@lexical/html": "0.41.0",
+    "@payloadcms/next": "3.84.1",
+    "@payloadcms/richtext-lexical": "3.84.1",
+    "@payloadcms/ui": "3.84.1",
+    "@types/jsdom": "^21.1.7",
+    "@types/react": "^19.3.0",
+    "jsdom": "^24.0.0",
+    "lexical": "0.41.0",
+    "payload": "3.84.1",
+    "react": "^19.3.0"
+  }
+}

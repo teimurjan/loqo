@@ -1,0 +1,21 @@
+{
+  "name": "@opendeepl/sdk",
+  "version": "0.1.0",
+  "description": "The opendeepl adapter contract and a typed HTTP client for the platform API.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "bun": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && NODE_ENV=production bun build src/index.ts --outdir dist --target node --format esm --packages external && tsc -p tsconfig.build.json"
+  }
+}

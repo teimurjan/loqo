@@ -1,0 +1,1 @@
+ALTER TABLE "scenarios" ADD COLUMN "builtin" boolean DEFAULT false NOT NULL;
