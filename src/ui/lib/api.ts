@@ -20,7 +20,7 @@ export class ApiError extends Error {
 }
 
 /** Fired on any 401 so the shell can drop back to the login page. */
-export const UNAUTHORIZED_EVENT = 'opendeepl:unauthorized';
+export const UNAUTHORIZED_EVENT = 'loqo:unauthorized';
 
 const request = async <T>(method: string, path: string, body?: unknown): Promise<T> => {
   const headers: Record<string, string> = { accept: 'application/json' };

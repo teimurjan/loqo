@@ -1,4 +1,4 @@
-import { type Adapter, isPlaceholderOnlyKey, type PulledResource, type PushResource } from '@opendeepl/sdk';
+import { type Adapter, isPlaceholderOnlyKey, type PulledResource, type PushResource } from '@loqo/sdk';
 import { clean } from 'unllm';
 import {
   compositeKey,

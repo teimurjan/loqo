@@ -33,7 +33,7 @@ fi
 git commit --quiet -m "chore: update translations ($(date -u +%Y-%m-%d))"
 if [ "$remote_exists" -eq 1 ]; then git push --force --quiet origin "$BRANCH"; else git push --quiet -u origin "$BRANCH"; fi
 
-body="$(printf '%s translated values across %s files, applied from opendeepl.\n' "${WRITTEN:-?}" "${#files[@]}")"
+body="$(printf '%s translated values across %s files, applied from loqo.\n' "${WRITTEN:-?}" "${#files[@]}")"
 existing="$(gh pr list --head "$BRANCH" --base "$BASE_BRANCH" --state open --json url --jq '.[0].url // empty')"
 if [ -n "$existing" ]; then
   gh pr edit "$existing" --title "$PR_TITLE" --body "$body" >/dev/null

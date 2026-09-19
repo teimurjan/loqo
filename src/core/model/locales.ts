@@ -1,4 +1,4 @@
-export { pluralCategories } from '@opendeepl/sdk';
+export { pluralCategories } from '@loqo/sdk';
 
 const displayNames = new Intl.DisplayNames(['en'], { type: 'language', fallback: 'code' });
 

@@ -11,7 +11,7 @@ import { type Project, projects, resources, targets, verdicts } from '../src/db/
 import { noopQueue } from './helpers/queue';
 import type { TranslateQueue } from '../src/core/queue/types';
 
-const DATABASE_URL = process.env.TEST_DATABASE_URL ?? 'postgres://opendeepl:opendeepl@localhost:5432/opendeepl_test';
+const DATABASE_URL = process.env.TEST_DATABASE_URL ?? 'postgres://loqo:loqo@localhost:5432/loqo_test';
 
 const { db, pool } = createDb(DATABASE_URL);
 const deps = { db, queue: noopQueue };

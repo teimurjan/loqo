@@ -1,4 +1,4 @@
-import { type Adapter, defineAdapter, isPlainObject, type ProjectRef, type PulledResource, type PushRejection, type PushResource } from '@opendeepl/sdk';
+import { type Adapter, defineAdapter, isPlainObject, type ProjectRef, type PulledResource, type PushRejection, type PushResource } from '@loqo/sdk';
 import type { CollectionSlug, GlobalSlug, Payload, Where } from 'payload';
 import { type Describe, type DocumentOptions, documentToResources, localeWrites, rowsWithUnstableId } from './document';
 import { buildFieldConfigMap, type FieldConfigMap, type FieldLike } from './fields';
@@ -25,7 +25,7 @@ export type PayloadAdapterOptions = {
 };
 
 /** Marks the adapter's own writes so an `afterChange` hook can tell them from an editor's. */
-export const OPENDEEPL_CONTEXT = 'opendeepl';
+export const LOQO_CONTEXT = 'loqo';
 
 const fieldMapOf = (payload: Payload, ref: DocumentRef): FieldConfigMap => {
   const slug = 'global' in ref ? ref.global : ref.collection;
@@ -129,10 +129,10 @@ export const payloadAdapter = (payload: Payload, options: PayloadAdapterOptions)
           const data = write.data as Record<string, unknown>;
           try {
             if ('global' in ref) {
-              await payload.updateGlobal({ slug: ref.global as GlobalSlug, locale: write.locale, data, depth: 0, overrideAccess: true, context: { [OPENDEEPL_CONTEXT]: true } });
+              await payload.updateGlobal({ slug: ref.global as GlobalSlug, locale: write.locale, data, depth: 0, overrideAccess: true, context: { [LOQO_CONTEXT]: true } });
             } else {
               // `autosave` reuses one version across the locales of a run instead of minting one per locale.
-              await payload.update({ collection: ref.collection as CollectionSlug, id: ref.id, locale: write.locale, data, depth: 0, autosave: true, overrideAccess: true, context: { [OPENDEEPL_CONTEXT]: true } });
+              await payload.update({ collection: ref.collection as CollectionSlug, id: ref.id, locale: write.locale, data, depth: 0, autosave: true, overrideAccess: true, context: { [LOQO_CONTEXT]: true } });
             }
             written += write.units.length;
           } catch (error) {

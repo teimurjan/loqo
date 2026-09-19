@@ -6,13 +6,13 @@ import {
   type ClientOptions,
   createClient,
   importResources,
-  type OpendeeplClient,
+  type LoqoClient,
   type ScopeStatus,
   type StatusCounts,
   type SyncSummary,
   syncRemote,
   type SyncRemoteResult,
-} from '@opendeepl/sdk';
+} from '@loqo/sdk';
 import type { Payload, Where } from 'payload';
 import { type PayloadAdapterOptions, payloadAdapter, pullCollection, pullDocument } from './adapter';
 import { type DocumentRef, documentPrefix, entityTag } from './keys';
@@ -20,11 +20,11 @@ import type { LexicalCodec } from './rich-text';
 
 export type ServiceOptions = Omit<PayloadAdapterOptions, 'codec'> & {
   /** A client, or what to build one from. */
-  client: OpendeeplClient | ClientOptions;
+  client: LoqoClient | ClientOptions;
   /** The platform project's slug. */
   project: string;
   collections: readonly string[];
-  /** Defaults to the app's own Lexical editor config (`@opendeepl/payload/lexical`). */
+  /** Defaults to the app's own Lexical editor config (`@loqo/payload/lexical`). */
   codec?: (payload: Payload) => Promise<LexicalCodec>;
 };
 
@@ -47,7 +47,7 @@ export type ProjectStatus = {
   globals: { slug: string; applied: boolean; counts: StatusCounts }[];
 };
 
-const isClient = (client: OpendeeplClient | ClientOptions): client is OpendeeplClient => typeof (client as OpendeeplClient).import === 'function';
+const isClient = (client: LoqoClient | ClientOptions): client is LoqoClient => typeof (client as LoqoClient).import === 'function';
 
 /**
  * What the plugin does, without Payload's wiring: the hooks, the endpoints and the admin
@@ -138,4 +138,4 @@ export const createService = (options: ServiceOptions) => {
   return { client, importDocument, importCollection, applyDocument, documentStatus, scopeStatus, status, importAll, sync, translate };
 };
 
-export type OpendeeplService = ReturnType<typeof createService>;
+export type LoqoService = ReturnType<typeof createService>;

@@ -1,8 +1,8 @@
-import type { ApiResult } from '@opendeepl/sdk';
+import type { ApiResult } from '@loqo/sdk';
 import type { Endpoint, PayloadRequest } from 'payload';
 import { addDataAndFileToRequest } from 'payload';
 import type { DocumentRef } from './keys';
-import type { OpendeeplService } from './service';
+import type { LoqoService } from './service';
 
 export type EndpointOptions = {
   /** Bearer token accepted instead of a signed-in user — for a cron or a CI step. */
@@ -21,13 +21,13 @@ const bearerOf = (req: PayloadRequest): string | null => {
 const param = (req: PayloadRequest, name: string): string => String(req.routeParams?.[name] ?? '');
 
 /**
- * `/api/opendeepl/*`, for the admin components, a cron or a button:
+ * `/api/loqo/*`, for the admin components, a cron or a button:
  *
  * - `GET status`, `POST import` (whole project), `POST sync` (import, then apply what changed since
  *   `since`), `POST translate` (queue everything missing);
  * - per document: `GET|POST collections/:slug/:id/{status,translate,apply}` and `globals/:slug/…`.
  */
-export const createEndpoints = (service: OpendeeplService, options: EndpointOptions): Endpoint[] => {
+export const createEndpoints = (service: LoqoService, options: EndpointOptions): Endpoint[] => {
   const authorized = (req: PayloadRequest): boolean => Boolean(req.user) || (options.secret !== undefined && bearerOf(req) === options.secret);
 
   const guarded =
@@ -37,17 +37,17 @@ export const createEndpoints = (service: OpendeeplService, options: EndpointOpti
 
   const document = (kind: 'collections' | 'globals', action: 'status' | 'translate' | 'apply'): Endpoint => {
     const refOf = (req: PayloadRequest): DocumentRef => (kind === 'globals' ? { global: param(req, 'slug') } : { collection: param(req, 'slug'), id: param(req, 'id') });
-    const path = kind === 'globals' ? `/opendeepl/globals/:slug/${action}` : `/opendeepl/collections/:slug/:id/${action}`;
+    const path = kind === 'globals' ? `/loqo/globals/:slug/${action}` : `/loqo/collections/:slug/:id/${action}`;
     if (action === 'status') return { path, method: 'get', handler: guarded(async (req) => resultResponse(await service.documentStatus(refOf(req)))) };
     if (action === 'translate') return { path, method: 'post', handler: guarded(async (req) => resultResponse(await service.importDocument(req.payload, refOf(req)))) };
     return { path, method: 'post', handler: guarded(async (req) => resultResponse(await service.applyDocument(req.payload, refOf(req)))) };
   };
 
   return [
-    { path: '/opendeepl/status', method: 'get', handler: guarded(async () => resultResponse(await service.status())) },
-    { path: '/opendeepl/import', method: 'post', handler: guarded(async (req) => resultResponse(await service.importAll(req.payload))) },
+    { path: '/loqo/status', method: 'get', handler: guarded(async () => resultResponse(await service.status())) },
+    { path: '/loqo/import', method: 'post', handler: guarded(async (req) => resultResponse(await service.importAll(req.payload))) },
     {
-      path: '/opendeepl/sync',
+      path: '/loqo/sync',
       method: 'post',
       handler: guarded(async (req) => {
         await addDataAndFileToRequest(req);
@@ -55,7 +55,7 @@ export const createEndpoints = (service: OpendeeplService, options: EndpointOpti
         return resultResponse(await service.sync(req.payload, since));
       }),
     },
-    { path: '/opendeepl/translate', method: 'post', handler: guarded(async () => resultResponse(await service.translate())) },
+    { path: '/loqo/translate', method: 'post', handler: guarded(async () => resultResponse(await service.translate())) },
     ...(['collections', 'globals'] as const).flatMap((kind) => (['status', 'translate', 'apply'] as const).map((action) => document(kind, action))),
   ];
 };

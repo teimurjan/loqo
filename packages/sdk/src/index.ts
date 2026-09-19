@@ -1,5 +1,5 @@
 export { defineAdapter } from './adapter';
-export { type ApiFailure, type ApiResult, type ClientOptions, createClient, type OpendeeplClient } from './client';
+export { type ApiFailure, type ApiResult, type ClientOptions, createClient, type LoqoClient } from './client';
 export {
   arrays,
   createExtractor,

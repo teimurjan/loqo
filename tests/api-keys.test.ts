@@ -7,7 +7,7 @@ import { createDb } from '../src/db/client';
 import { runMigrations } from '../src/db/migrate';
 import { type Project, apiKeys, projects, users } from '../src/db/schema';
 
-const DATABASE_URL = process.env.TEST_DATABASE_URL ?? 'postgres://opendeepl:opendeepl@localhost:5432/opendeepl_test';
+const DATABASE_URL = process.env.TEST_DATABASE_URL ?? 'postgres://loqo:loqo@localhost:5432/loqo_test';
 
 const { db, pool } = createDb(DATABASE_URL);
 let project: Project;
@@ -29,11 +29,11 @@ afterAll(async () => {
 describe('project API keys', () => {
   test('the token is returned once; the list carries a prefix and never the token or its hash', async () => {
     const { key, token } = await createApiKey(db, { projectId: project.id, name: '  ci  ', role: 'editor', createdBy: null });
-    expect(token).toMatch(/^odl_[A-Za-z0-9_-]{43}$/);
+    expect(token).toMatch(/^loqo_[A-Za-z0-9_-]{43}$/);
     expect(key).not.toHaveProperty('keyHash');
     expect(key.name).toBe('ci');
     expect(token.startsWith(key.prefix)).toBe(true);
-    expect(key.prefix).toHaveLength(10);
+    expect(key.prefix).toHaveLength(11);
 
     const listed = await listApiKeys(db, project.id);
     expect(listed).toEqual([key]);

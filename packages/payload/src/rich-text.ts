@@ -1,9 +1,9 @@
-import { type ExtractedField, isPlainObject, type Path, type RestorableField } from '@opendeepl/sdk';
+import { type ExtractedField, isPlainObject, type Path, type RestorableField } from '@loqo/sdk';
 
 export type LexicalNode = { type: string; children?: LexicalNode[]; [key: string]: unknown };
 
 /**
- * Lexical ↔ HTML. The real one (`@opendeepl/payload/lexical`) needs the editor config that only the
+ * Lexical ↔ HTML. The real one (`@loqo/payload/lexical`) needs the editor config that only the
  * running app has, which is why it is injected rather than imported.
  */
 export type LexicalCodec = {

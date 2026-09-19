@@ -1,4 +1,4 @@
-export { isPlaceholderOnlyKey, SPECIFIER, SPECIFIER_TYPES, stripSpecifiers } from '@opendeepl/sdk';
+export { isPlaceholderOnlyKey, SPECIFIER, SPECIFIER_TYPES, stripSpecifiers } from '@loqo/sdk';
 
 /** `{{name}}` template keys; the base translate prompt forbids touching them. */
 export const MUSTACHE = /\{\{\s*[\w.-]+\s*\}\}/g;

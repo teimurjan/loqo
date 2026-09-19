@@ -110,7 +110,7 @@ const AppSidebar = () => {
               <NavLink to="/">
                 <img src={logo} alt="" className="size-8 shrink-0" />
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">opendeepl</span>
+                  <span className="truncate font-semibold">loqo</span>
                   <span className="truncate text-xs text-sidebar-foreground/70">OSS AI-powered translations</span>
                 </div>
               </NavLink>

@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'bun:test';
-import { createClient } from '@opendeepl/sdk';
+import { createClient } from '@loqo/sdk';
 import type { CollectionAfterChangeHook, CollectionAfterDeleteHook, Config, Payload, PayloadRequest } from 'payload';
-import { OPENDEEPL_CONTEXT, payloadAdapter } from '../src/adapter';
-import { opendeeplPlugin, opendeeplServiceOf } from '../src/plugin';
+import { LOQO_CONTEXT, payloadAdapter } from '../src/adapter';
+import { loqoPlugin, loqoServiceOf } from '../src/plugin';
 import type { LexicalCodec } from '../src/rich-text';
 
 const identity: LexicalCodec = { toHtml: (node) => JSON.stringify(node), fromHtml: (html) => JSON.parse(html) };
@@ -95,7 +95,7 @@ describe('payloadAdapter', () => {
         depth: 0,
         autosave: true,
         overrideAccess: true,
-        context: { [OPENDEEPL_CONTEXT]: true },
+        context: { [LOQO_CONTEXT]: true },
         data: { id: 'p1', _status: 'published', title: 'Startseite', body: { root: { type: 'root', children: [paragraph('Hallo')] } }, hero: undefined },
       },
     ]);
@@ -115,7 +115,7 @@ describe('payloadAdapter', () => {
   });
 });
 
-describe('opendeeplPlugin', () => {
+describe('loqoPlugin', () => {
   const calls: { url: string; body: unknown }[] = [];
   const client = createClient({
     baseUrl: 'http://platform',
@@ -129,30 +129,30 @@ describe('opendeeplPlugin', () => {
     },
   });
   const pending: Promise<unknown>[] = [];
-  const plugin = opendeeplPlugin({ client, project: 'cms', collections: ['pages'], globals: ['header'], codec: async () => identity, defer: (work) => void pending.push(work) });
+  const plugin = loqoPlugin({ client, project: 'cms', collections: ['pages'], globals: ['header'], codec: async () => identity, defer: (work) => void pending.push(work) });
   const base: Config = { secret: 's', db: {} as never, collections: [{ slug: 'pages', fields: [] }, { slug: 'media', fields: [] }], globals: [{ slug: 'header', fields: [] }] };
 
   test('hooks and controls land only on the listed collections and globals; endpoints and the status view are added', async () => {
     const config = await plugin(base);
     expect(config.collections?.map((collection) => (collection.hooks?.afterChange ?? []).length)).toEqual([1, 0]);
     expect(config.globals?.map((global) => (global.hooks?.afterChange ?? []).length)).toEqual([1]);
-    expect(config.collections?.map((collection) => collection.admin?.components?.edit?.beforeDocumentControls)).toEqual([['@opendeepl/payload/client#TranslateControls'], undefined]);
-    expect(config.globals?.[0]?.admin?.components?.elements?.beforeDocumentControls).toEqual(['@opendeepl/payload/client#TranslateControls']);
-    expect(config.admin?.components?.views?.opendeepl).toEqual({ Component: '@opendeepl/payload/rsc#TranslationStatusView', path: '/opendeepl' });
+    expect(config.collections?.map((collection) => collection.admin?.components?.edit?.beforeDocumentControls)).toEqual([['@loqo/payload/client#TranslateControls'], undefined]);
+    expect(config.globals?.[0]?.admin?.components?.elements?.beforeDocumentControls).toEqual(['@loqo/payload/client#TranslateControls']);
+    expect(config.admin?.components?.views?.loqo).toEqual({ Component: '@loqo/payload/rsc#TranslationStatusView', path: '/loqo' });
     expect(config.endpoints?.map((endpoint) => `${endpoint.method} ${endpoint.path}`)).toEqual([
-      'get /opendeepl/status',
-      'post /opendeepl/import',
-      'post /opendeepl/sync',
-      'post /opendeepl/translate',
-      'get /opendeepl/collections/:slug/:id/status',
-      'post /opendeepl/collections/:slug/:id/translate',
-      'post /opendeepl/collections/:slug/:id/apply',
-      'get /opendeepl/globals/:slug/status',
-      'post /opendeepl/globals/:slug/translate',
-      'post /opendeepl/globals/:slug/apply',
+      'get /loqo/status',
+      'post /loqo/import',
+      'post /loqo/sync',
+      'post /loqo/translate',
+      'get /loqo/collections/:slug/:id/status',
+      'post /loqo/collections/:slug/:id/translate',
+      'post /loqo/collections/:slug/:id/apply',
+      'get /loqo/globals/:slug/status',
+      'post /loqo/globals/:slug/translate',
+      'post /loqo/globals/:slug/apply',
     ]);
 
-    const bare = await opendeeplPlugin({ client, project: 'cms', collections: ['pages'], codec: async () => identity, admin: false })(base);
+    const bare = await loqoPlugin({ client, project: 'cms', collections: ['pages'], codec: async () => identity, admin: false })(base);
     expect(bare.collections?.[0]?.admin).toBeUndefined();
     expect(bare.admin?.components?.views).toBeUndefined();
   });
@@ -166,7 +166,7 @@ describe('opendeeplPlugin', () => {
 
     afterChange({ ...args, req: req('en') } as never);
     afterChange({ ...args, req: req('de') } as never);
-    afterChange({ ...args, req: req('en', { [OPENDEEPL_CONTEXT]: true }) } as never);
+    afterChange({ ...args, req: req('en', { [LOQO_CONTEXT]: true }) } as never);
     afterChange({ ...args, doc: { id: 'p2', _status: 'draft' }, req: req('en') } as never);
     await Promise.all(pending);
     const imports = calls.filter((call) => call.url.endsWith('/import'));
@@ -182,8 +182,8 @@ describe('opendeeplPlugin', () => {
   test('a document endpoint answers with the platform result, and only to a user or the secret', async () => {
     calls.length = 0;
     const { payload } = fakePayload();
-    const config = await opendeeplPlugin({ client, project: 'cms', collections: ['pages'], codec: async () => identity, secret: 'cron' })(base);
-    const translate = config.endpoints?.find((endpoint) => endpoint.path === '/opendeepl/collections/:slug/:id/translate');
+    const config = await loqoPlugin({ client, project: 'cms', collections: ['pages'], codec: async () => identity, secret: 'cron' })(base);
+    const translate = config.endpoints?.find((endpoint) => endpoint.path === '/loqo/collections/:slug/:id/translate');
     const request = (headers: Record<string, string>, user: unknown = null) =>
       ({ payload, user, headers: new Headers(headers), routeParams: { slug: 'pages', id: 'p1' } }) as unknown as PayloadRequest;
     expect((await translate!.handler(request({}))).status).toBe(401);
@@ -212,9 +212,9 @@ describe('opendeeplPlugin', () => {
         return { docs: args.page === 1 ? strings : [], hasNextPage: false };
       },
     } as unknown as Payload;
-    const config = await opendeeplPlugin({ client, project: 'cms', collections: ['app-translations'], codec: async () => identity, describe: (_ref, doc) => ({ tags: [(doc as { product: string }).product] }) })(base);
+    const config = await loqoPlugin({ client, project: 'cms', collections: ['app-translations'], codec: async () => identity, describe: (_ref, doc) => ({ tags: [(doc as { product: string }).product] }) })(base);
     (payload.config as { custom?: unknown }).custom = config.custom;
-    const service = opendeeplServiceOf(payload);
+    const service = loqoServiceOf(payload);
     const scope = { collection: 'app-translations', where: { product: { equals: 'ios' } }, tags: ['ios'] };
 
     expect((await service.importCollection(payload, scope, { enqueue: false })).ok).toBe(true);
@@ -234,6 +234,6 @@ describe('opendeeplPlugin', () => {
     expect(await service.scopeStatus(scope)).toEqual({ ok: true, data: { counts: { translated: 4, queued: 1 }, digest: 'abc' } });
     expect(calls.at(-1)?.url).toBe('http://platform/api/projects/cms/status?tags=collection%3Aapp-translations%2Cios');
 
-    expect(() => opendeeplServiceOf({ config: { custom: {} } } as unknown as Payload)).toThrow('opendeeplPlugin is not installed');
+    expect(() => loqoServiceOf({ config: { custom: {} } } as unknown as Payload)).toThrow('loqoPlugin is not installed');
   });
 });

@@ -46,7 +46,7 @@ const FreshToken = ({ name, token, slug }: { name: string; token: string; slug: 
     </div>
     <code className="break-all rounded bg-background px-2 py-1 font-mono text-xs">{token}</code>
     <pre className="overflow-x-auto rounded bg-background px-2 py-1 font-mono text-xs text-muted-foreground">
-      {`OPENDEEPL_URL=${window.location.origin}\nOPENDEEPL_API_KEY=… # project "${slug}"`}
+      {`LOQO_URL=${window.location.origin}\nLOQO_API_KEY=… # project "${slug}"`}
     </pre>
   </div>
 );
@@ -84,7 +84,7 @@ export const ApiKeysDialog = ({ slug }: { slug: string }) => {
       <DialogContent className="max-w-2xl">
         <DialogTitle>API keys</DialogTitle>
         <DialogDescription>
-          What your repo's sync step authenticates with. A key is bound to this project and one role; pass it to <code>createClient</code> from <code>@opendeepl/sdk</code>.
+          What your repo's sync step authenticates with. A key is bound to this project and one role; pass it to <code>createClient</code> from <code>@loqo/sdk</code>.
         </DialogDescription>
         <form
           className="flex flex-wrap items-end gap-2"

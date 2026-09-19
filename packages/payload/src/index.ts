@@ -1,10 +1,10 @@
-export { OPENDEEPL_CONTEXT, type PayloadAdapterOptions, payloadAdapter, pullCollection, pullDocument } from './adapter';
+export { LOQO_CONTEXT, type PayloadAdapterOptions, payloadAdapter, pullCollection, pullDocument } from './adapter';
 export { createEndpoints, type EndpointOptions } from './endpoints';
 export { type Describe, type Description, type DocumentOptions, documentToResources, type LocaleWrite, localeWrites, rowsWithoutId, rowsWithUnstableId } from './document';
 export { buildFieldConfigMap, configPathOf, type FieldConfigMap, type FieldLike, fieldConfigAt, NON_PROSE_FIELD_TYPES, REFERENCE_FIELD_TYPES } from './fields';
 export { type DocumentRef, documentPrefix, entityTag, parseResourceKey, resourceKey } from './keys';
-export { type OpendeeplPluginOptions, opendeeplPlugin, opendeeplServiceOf } from './plugin';
-export { type CollectionScope, createService, type DocumentStatus, type OpendeeplService, type ProjectStatus, type ServiceOptions } from './service';
+export { type LoqoPluginOptions, loqoPlugin, loqoServiceOf } from './plugin';
+export { type CollectionScope, createService, type DocumentStatus, type LoqoService, type ProjectStatus, type ServiceOptions } from './service';
 export { extractRichText, extractRichTextRestorable, htmlToNode, isLexicalNode, type LexicalCodec, type LexicalNode, linkHref, nodeToHtml, restoreFromSource } from './rich-text';
 export { breadcrumbs, createLocalizableExtractor, type LocalizableOptions, type PayloadContext, payloadText, richText } from './rules';
 export { markTextState, restoreTextState, textStateAttribute } from './text-state';

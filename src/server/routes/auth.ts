@@ -6,9 +6,9 @@ import { memberships } from '../../core/members/service';
 import { type AppContext, actorOf, openRoute, route } from '../context';
 import { json, parseQuery } from '../http';
 
-const STATE_COOKIE = 'opendeepl_oauth_state';
-const VERIFIER_COOKIE = 'opendeepl_oauth_verifier';
-const NEXT_COOKIE = 'opendeepl_oauth_next';
+const STATE_COOKIE = 'loqo_oauth_state';
+const VERIFIER_COOKIE = 'loqo_oauth_verifier';
+const NEXT_COOKIE = 'loqo_oauth_next';
 
 const redirect = (location: string, cookies: string[]): Response => {
   const headers = new Headers({ location });

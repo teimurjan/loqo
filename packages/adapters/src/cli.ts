@@ -1,17 +1,17 @@
 import { appendFileSync } from 'node:fs';
 import { parseArgs } from 'node:util';
-import { type Adapter, type ApiResult, applyTranslations, createClient, importResources, type StatusCounts } from '@opendeepl/sdk';
+import { type Adapter, type ApiResult, applyTranslations, createClient, importResources, type StatusCounts } from '@loqo/sdk';
 import { androidXml } from './android-xml';
 import { json } from './json';
 import { xcstrings } from './xcstrings';
 
 /**
- * `opendeepl-sync <request|import|check>` (`bin.ts`): the three steps a repository's CI runs against
+ * `loqo-sync <request|import|check>` (`bin.ts`): the three steps a repository's CI runs against
  * the platform, with the adapter picked and configured from flags so nothing has to be installed in
  * the repository being synced. Prints a JSON summary; under GitHub Actions also writes step outputs.
  */
 
-const USAGE = `usage: opendeepl-sync <request|import|check> [options]
+const USAGE = `usage: loqo-sync <request|import|check> [options]
 
   request   pull the repository's strings into the platform (prunes what is gone) and queue what is missing
   import    write translated values back into the repository
@@ -24,9 +24,9 @@ options
   --ignore <prefix,...>                    path prefixes to skip
   --locale-map <locale=file,...>           platform locale → file locale, e.g. zh-hans=zh-Hans
   --source <path> --target <path> --tags <tag,...>   json adapter
-  --project <slug>     or OPENDEEPL_PROJECT
-  --base-url <url>     or OPENDEEPL_BASE_URL
-  --api-key <key>      or OPENDEEPL_API_KEY
+  --project <slug>     or LOQO_PROJECT
+  --base-url <url>     or LOQO_BASE_URL
+  --api-key <key>      or LOQO_API_KEY
   --since <iso-8601>   import: only targets changed since then
   --no-prune           request: keep platform resources the repository no longer has
   --no-enqueue         request: import without queuing translations
@@ -98,9 +98,9 @@ export const parseCli = (argv: string[], env: Record<string, string | undefined>
     source: values.source,
     target: values.target,
     tags: list(values.tags),
-    project: required('project', values.project ?? env.OPENDEEPL_PROJECT, 'OPENDEEPL_PROJECT'),
-    baseUrl: required('base-url', values['base-url'] ?? env.OPENDEEPL_BASE_URL, 'OPENDEEPL_BASE_URL'),
-    apiKey: required('api-key', values['api-key'] ?? env.OPENDEEPL_API_KEY, 'OPENDEEPL_API_KEY'),
+    project: required('project', values.project ?? env.LOQO_PROJECT, 'LOQO_PROJECT'),
+    baseUrl: required('base-url', values['base-url'] ?? env.LOQO_BASE_URL, 'LOQO_BASE_URL'),
+    apiKey: required('api-key', values['api-key'] ?? env.LOQO_API_KEY, 'LOQO_API_KEY'),
     since: values.since,
     prune: !values['no-prune'],
     enqueue: !values['no-enqueue'],

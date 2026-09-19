@@ -1,7 +1,7 @@
 FROM oven/bun:1.3-alpine
 # Laid out like a checkout: a deployment's own config can be mounted beside it (`/<deployment>/`)
-# and reach the platform through `../opendeepl/src`, exactly as it does next to a clone.
-WORKDIR /opendeepl
+# and reach the platform through `../loqo/src`, exactly as it does next to a clone.
+WORKDIR /loqo
 ENV NODE_ENV=production
 
 COPY package.json bun.lock ./

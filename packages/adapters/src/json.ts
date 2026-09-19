@@ -1,4 +1,4 @@
-import type { Adapter, PulledResource, PushResource } from '@opendeepl/sdk';
+import type { Adapter, PulledResource, PushResource } from '@loqo/sdk';
 import { readTextIfExists, toFileLocale, writeText } from './files';
 
 export type JsonOptions = {

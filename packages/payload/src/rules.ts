@@ -8,7 +8,7 @@ import {
   type LocaleContext,
   localizedText,
   objects,
-} from '@opendeepl/sdk';
+} from '@loqo/sdk';
 import { type FieldConfigMap, fieldConfigAt, isNonProseField, lengthMeta } from './fields';
 import { extractRichText, isLexicalNode, type LexicalCodec } from './rich-text';
 

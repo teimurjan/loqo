@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, test } from 'bun:test';
 import { createProviderRegistry } from 'ai';
 import { MockLanguageModelV4, MockProviderV4 } from 'ai/test';
 import { eq } from 'drizzle-orm';
-import { pulledTarget, type PulledResource } from '@opendeepl/sdk';
+import { pulledTarget, type PulledResource } from '@loqo/sdk';
 import type { ResolvedConfig } from '../src/config';
 import { signIn } from '../src/core/auth/service';
 import { brandTerms, defaultGuardKinds, defaultGuards } from '../src/core/guards';
@@ -28,14 +28,14 @@ import { noopQueue } from './helpers/queue';
  * (a guard) or alters (a processor) is a place where it disagrees with what production holds today:
  * either the new rule is stricter, or the old engine let something through. Both are worth a look.
  *
- * OPENDEEPL_REPLAY=<export.json> (`{ sourceLocale, targetLocales, resources: PulledResource[] }`);
- * OPENDEEPL_LOCALES=de,ja narrows the locales; OPENDEEPL_BRAND_TERMS=Acme,Acme+ adds the brand-terms
+ * LOQO_REPLAY=<export.json> (`{ sourceLocale, targetLocales, resources: PulledResource[] }`);
+ * LOQO_LOCALES=de,ja narrows the locales; LOQO_BRAND_TERMS=Acme,Acme+ adds the brand-terms
  * guard the deployment runs. Needs the test Postgres like every pipeline test.
  */
-const REPLAY = process.env.OPENDEEPL_REPLAY;
-const LOCALES = process.env.OPENDEEPL_LOCALES?.split(',').map((locale) => locale.trim()) ?? null;
-const BRAND_TERMS = process.env.OPENDEEPL_BRAND_TERMS?.split(',').map((term) => term.trim()).filter(Boolean) ?? [];
-const DATABASE_URL = process.env.TEST_DATABASE_URL ?? 'postgres://opendeepl:opendeepl@localhost:5433/opendeepl_test';
+const REPLAY = process.env.LOQO_REPLAY;
+const LOCALES = process.env.LOQO_LOCALES?.split(',').map((locale) => locale.trim()) ?? null;
+const BRAND_TERMS = process.env.LOQO_BRAND_TERMS?.split(',').map((term) => term.trim()).filter(Boolean) ?? [];
+const DATABASE_URL = process.env.TEST_DATABASE_URL ?? 'postgres://loqo:loqo@localhost:5433/loqo_test';
 const EXAMPLES = 12;
 
 type Export = { sourceLocale: string; targetLocales: string[]; resources: PulledResource[] };

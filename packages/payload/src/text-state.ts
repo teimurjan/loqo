@@ -1,4 +1,4 @@
-import { isPlainObject } from '@opendeepl/sdk';
+import { isPlainObject } from '@loqo/sdk';
 import type { LexicalNode } from './rich-text';
 
 /**

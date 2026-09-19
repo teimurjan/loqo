@@ -1,7 +1,7 @@
 {
-  "name": "@opendeepl/adapters",
+  "name": "@loqo/adapters",
   "version": "0.1.0",
-  "description": "opendeepl adapters for string catalogs in a repository: iOS .xcstrings, Android values XML, flat JSON.",
+  "description": "loqo adapters for string catalogs in a repository: iOS .xcstrings, Android values XML, flat JSON.",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -16,11 +16,11 @@
     "src"
   ],
   "dependencies": {
-    "@opendeepl/sdk": "workspace:*",
+    "@loqo/sdk": "workspace:*",
     "unllm": "^2.1.0"
   },
   "bin": {
-    "opendeepl-sync": "./dist/bin.js"
+    "loqo-sync": "./dist/bin.js"
   },
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production bun build src/index.ts src/bin.ts --outdir dist --target node --format esm --packages external --splitting && tsc -p tsconfig.build.json"

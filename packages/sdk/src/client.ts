@@ -110,4 +110,4 @@ export const createClient = (options: ClientOptions) => {
   };
 };
 
-export type OpendeeplClient = ReturnType<typeof createClient>;
+export type LoqoClient = ReturnType<typeof createClient>;

@@ -3,8 +3,8 @@ import type { Db } from '../../db/client';
 import { type ApiKey, type MemberRole, type Project, apiKeys, projects } from '../../db/schema';
 import { hashToken, newToken } from '../auth/session';
 
-const KEY_PREFIX = 'odl_';
-/** `odl_` plus this many characters is what the list shows. */
+const KEY_PREFIX = 'loqo_';
+/** `loqo_` plus this many characters is what the list shows. */
 const VISIBLE_CHARS = 6;
 /** `lastUsedAt` is informational; a busy CI job should not turn every request into a write. */
 const LAST_USED_RESOLUTION_MS = 60_000;

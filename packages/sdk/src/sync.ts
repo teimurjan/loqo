@@ -1,4 +1,4 @@
-import type { ApiResult, OpendeeplClient } from './client';
+import type { ApiResult, LoqoClient } from './client';
 import type { Adapter, ImportOptions, PushResource, PushResult, SyncSummary, TranslationRow } from './types';
 
 /**
@@ -13,7 +13,7 @@ const missing = (adapter: Adapter, half: 'pull' | 'push'): ApiResult<never> => (
 
 /** `adapter.pull()` → `POST /import`. */
 export const importResources = async (
-  client: OpendeeplClient,
+  client: LoqoClient,
   slug: string,
   adapter: Adapter,
   options: ImportOptions = {},
@@ -59,7 +59,7 @@ const newest = (a: string | null, b: string): string => (a === null || b > a ? b
 
 /** `GET /translations` (all pages) → `adapter.push()`. */
 export const applyTranslations = async (
-  client: OpendeeplClient,
+  client: LoqoClient,
   slug: string,
   adapter: Adapter,
   options: ApplyOptions = {},
@@ -89,7 +89,7 @@ export type SyncRemoteResult = { imported: SyncSummary; applied: ApplyResult };
 
 /** Import, then apply: one round trip of the store through the platform. */
 export const syncRemote = async (
-  client: OpendeeplClient,
+  client: LoqoClient,
   slug: string,
   adapter: Adapter,
   options: SyncRemoteOptions = {},

@@ -2,9 +2,9 @@ import { DefaultTemplate } from '@payloadcms/next/templates';
 import { Gutter } from '@payloadcms/ui';
 import type { AdminViewServerProps } from 'payload';
 // Through the package boundary, not the file: the client bundle must stay its own module with its `'use client'` directive.
-import { TranslationStatus } from '@opendeepl/payload/client';
+import { TranslationStatus } from '@loqo/payload/client';
 
-/** The `admin/opendeepl` view: the admin shell around `TranslationStatus`. The endpoints it calls need a signed-in user, so the view does too. */
+/** The `admin/loqo` view: the admin shell around `TranslationStatus`. The endpoints it calls need a signed-in user, so the view does too. */
 export const TranslationStatusView = ({ initPageResult, params, searchParams }: AdminViewServerProps) => {
   const { payload, user } = initPageResult.req;
   if (!user) return <p>Sign in to see the translation status.</p>;

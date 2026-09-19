@@ -1,13 +1,13 @@
 'use client';
 
-import type { StatusCounts, SyncSummary, TargetStatus } from '@opendeepl/sdk';
+import type { StatusCounts, SyncSummary, TargetStatus } from '@loqo/sdk';
 import { Button, toast, useConfig, useDocumentInfo } from '@payloadcms/ui';
 import { useCallback, useEffect, useState } from 'react';
 import type { DocumentStatus, ProjectStatus } from './service';
 
 /**
- * The plugin's admin pieces, talking to its own `/api/opendeepl/*` endpoints: translate/apply
- * controls on a document's edit view, and a project-wide status table for the `opendeepl` view.
+ * The plugin's admin pieces, talking to its own `/api/loqo/*` endpoints: translate/apply
+ * controls on a document's edit view, and a project-wide status table for the `loqo` view.
  * Kept free of styling beyond Payload's own elements so they sit in any admin theme.
  */
 
@@ -24,7 +24,7 @@ type Failure = { error?: string };
 
 const useApi = () => {
   const { config } = useConfig();
-  const base = `${config.serverURL ?? ''}${config.routes.api}/opendeepl`;
+  const base = `${config.serverURL ?? ''}${config.routes.api}/loqo`;
   return useCallback(
     async <T,>(path: string, init?: RequestInit): Promise<T> => {
       const response = await fetch(`${base}${path}`, { credentials: 'include', ...init });
@@ -116,7 +116,7 @@ const RowLine = ({ row }: { row: Row }) => (
   </tr>
 );
 
-/** The `opendeepl` admin view's body: every listed collection and global with its targets by status, and the project-wide actions. */
+/** The `loqo` admin view's body: every listed collection and global with its targets by status, and the project-wide actions. */
 export const TranslationStatus = () => {
   const api = useApi();
   const [status, setStatus] = useState<ProjectStatus | null>(null);

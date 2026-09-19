@@ -1,7 +1,7 @@
 {
-  "name": "@opendeepl/payload",
+  "name": "@loqo/payload",
   "version": "0.1.0",
-  "description": "opendeepl adapter and plugin for Payload CMS: documents in, translations back, inside your app.",
+  "description": "loqo adapter and plugin for Payload CMS: documents in, translations back, inside your app.",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -34,7 +34,7 @@
     "build": "bun build.ts"
   },
   "dependencies": {
-    "@opendeepl/sdk": "workspace:*"
+    "@loqo/sdk": "workspace:*"
   },
   "peerDependencies": {
     "@lexical/headless": ">=0.30",

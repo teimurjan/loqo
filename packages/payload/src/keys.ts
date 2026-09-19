@@ -1,4 +1,4 @@
-import { parsePath, type Path, pathKey } from '@opendeepl/sdk';
+import { parsePath, type Path, pathKey } from '@loqo/sdk';
 
 /** Which document a resource belongs to. Globals are keyed under `globals/` so they cannot collide with a collection. */
 export type DocumentRef = { collection: string; id: string } | { global: string };

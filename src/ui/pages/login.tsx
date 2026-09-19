@@ -19,7 +19,7 @@ export const LoginPage = () => {
       <Card className="w-full max-w-sm">
         <CardHeader className="items-center text-center">
           <img src={logo} alt="" className="mb-2 size-12" />
-          <CardTitle>opendeepl</CardTitle>
+          <CardTitle>loqo</CardTitle>
           <CardDescription>Sign in to reach the projects you were invited to.</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-3">

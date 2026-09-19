@@ -17,7 +17,7 @@ import {
   restore,
   setAt,
   type Translations,
-} from '@opendeepl/sdk';
+} from '@loqo/sdk';
 import { type FieldConfigMap, fieldConfigAt } from './fields';
 import { type DocumentRef, documentPrefix, entityTag, resourceKey } from './keys';
 import { extractRichTextRestorable, htmlToNode, isLexicalNode, type LexicalCodec, nodeToHtml, restoreFromSource } from './rich-text';

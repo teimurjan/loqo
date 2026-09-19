@@ -1,0 +1,55 @@
+# Package releases, driven by conventional commits on main: a commit scoped to a package
+# (`feat(sdk): …`) lands in that package's release pull request; merging it tags the release and
+# publishes the package. Unscoped commits release nothing. See scripts/release/.
+name: release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      paths_released: ${{ steps.release.outputs.paths_released }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.10
+      - run: bun install --frozen-lockfile
+      - id: release
+        run: bun scripts/release/main.ts
+        env:
+          # Pull requests opened with GITHUB_TOKEN trigger no workflows; set RELEASE_PLEASE_TOKEN
+          # (a PAT or app token) to get CI on release pull requests.
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN || secrets.GITHUB_TOKEN }}
+
+  publish:
+    needs: release-please
+    if: needs.release-please.outputs.paths_released != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        path: ${{ fromJson(needs.release-please.outputs.paths_released) }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.10
+      - run: bun install --frozen-lockfile
+      # Every package, in dependency order: a package's declarations resolve @loqo/sdk from its dist.
+      - run: bun run build:packages
+      - run: bun publish --access public
+        working-directory: ${{ matrix.path }}
+        env:
+          NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}

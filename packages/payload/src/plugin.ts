@@ -1,9 +1,9 @@
 import type { CollectionAfterChangeHook, CollectionAfterDeleteHook, CollectionConfig, Config, GlobalAfterChangeHook, GlobalConfig, Payload, PayloadRequest, Plugin } from 'payload';
-import { OPENDEEPL_CONTEXT } from './adapter';
+import { LOQO_CONTEXT } from './adapter';
 import { createEndpoints } from './endpoints';
-import { createService, type OpendeeplService, type ServiceOptions } from './service';
+import { createService, type LoqoService, type ServiceOptions } from './service';
 
-export type OpendeeplPluginOptions = ServiceOptions & {
+export type LoqoPluginOptions = ServiceOptions & {
   /** Re-import a document when an editor saves it in the source locale. On by default. */
   importOnChange?: boolean;
   /** Keeps a hook-triggered import alive after the response; on Vercel pass `waitUntil`. */
@@ -13,21 +13,21 @@ export type OpendeeplPluginOptions = ServiceOptions & {
   onError?: (message: string, detail: unknown) => void;
   /**
    * The admin pieces: translate/apply controls on every listed document's edit view and a status
-   * view at `admin/opendeepl`. `false` adds nothing; `importPath` is where the components are
-   * imported from when the package is not consumed from a registry (`/src/vendor/opendeepl`, say).
+   * view at `admin/loqo`. `false` adds nothing; `importPath` is where the components are
+   * imported from when the package is not consumed from a registry (`/src/vendor/loqo`, say).
    */
   admin?: false | { controls?: boolean; view?: false | { path?: `/${string}` }; importPath?: string };
 };
 
-const DEFAULT_IMPORT_PATH = '@opendeepl/payload';
+const DEFAULT_IMPORT_PATH = '@loqo/payload';
 
 /** Where the plugin leaves its service on the config, for app code that has a `payload` and a job for it. */
-const CUSTOM_KEY = 'opendeepl';
+const CUSTOM_KEY = 'loqo';
 
-export const opendeeplServiceOf = (payload: Payload): OpendeeplService => {
+export const loqoServiceOf = (payload: Payload): LoqoService => {
   const service = (payload.config.custom as Record<string, unknown> | undefined)?.[CUSTOM_KEY];
-  if (!service) throw new Error('opendeeplPlugin is not installed in this Payload config');
-  return service as OpendeeplService;
+  if (!service) throw new Error('loqoPlugin is not installed in this Payload config');
+  return service as LoqoService;
 };
 
 const sourceLocaleOf = (req: PayloadRequest): string | undefined => (req.payload.config.localization ? req.payload.config.localization.defaultLocale : undefined);
@@ -37,15 +37,15 @@ const sourceLocaleOf = (req: PayloadRequest): string | undefined => (req.payload
  *
  * - `afterChange`/`afterDelete` on the listed collections and globals re-import that one document
  *   (pruning under its key prefix), so the platform sees an edit as soon as it is saved;
- * - `/api/opendeepl/*` endpoints (see `createEndpoints`) for the admin components, a cron or a CI step;
+ * - `/api/loqo/*` endpoints (see `createEndpoints`) for the admin components, a cron or a CI step;
  * - the admin components themselves, unless `admin: false`;
- * - the service under `config.custom.opendeepl`, reachable as `opendeeplServiceOf(payload)`.
+ * - the service under `config.custom.loqo`, reachable as `loqoServiceOf(payload)`.
  *
  * Translations flow back through `sync`/`apply`; nothing here listens for them.
  */
-export const opendeeplPlugin = (options: OpendeeplPluginOptions): Plugin => {
+export const loqoPlugin = (options: LoqoPluginOptions): Plugin => {
   const service = createService(options);
-  const onError = options.onError ?? ((message, detail) => console.error(`[opendeepl] ${message}`, detail));
+  const onError = options.onError ?? ((message, detail) => console.error(`[loqo] ${message}`, detail));
   const defer = options.defer ?? ((work) => void work.catch((error: unknown) => onError('background import failed', error)));
   const admin = options.admin === false ? undefined : { controls: true, view: {}, importPath: DEFAULT_IMPORT_PATH, ...options.admin };
   const controlsComponent = `${admin?.importPath ?? DEFAULT_IMPORT_PATH}/client#TranslateControls`;
@@ -59,7 +59,7 @@ export const opendeeplPlugin = (options: OpendeeplPluginOptions): Plugin => {
 
   const shouldImport = (req: PayloadRequest, doc: unknown): boolean => {
     if (options.importOnChange === false) return false;
-    if (req.context?.[OPENDEEPL_CONTEXT]) return false;
+    if (req.context?.[LOQO_CONTEXT]) return false;
     const sourceLocale = sourceLocaleOf(req);
     if (sourceLocale && req.locale && req.locale !== sourceLocale) return false;
     const status = (doc as { _status?: string } | null)?._status;
@@ -123,7 +123,7 @@ export const opendeeplPlugin = (options: OpendeeplPluginOptions): Plugin => {
                 ...config.admin?.components,
                 views: {
                   ...config.admin?.components?.views,
-                  opendeepl: { Component: `${admin.importPath}/rsc#TranslationStatusView`, path: admin.view.path ?? '/opendeepl' },
+                  loqo: { Component: `${admin.importPath}/rsc#TranslationStatusView`, path: admin.view.path ?? '/loqo' },
                 },
               },
             },

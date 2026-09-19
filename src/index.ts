@@ -27,9 +27,9 @@ const connectionString = env('DATABASE_URL');
 
 /** `bun --hot` re-runs this module but keeps `globalThis`; the previous run's connections go first, or every reload leaks a pool. */
 declare global {
-  var opendeeplRuntime: { stop: () => Promise<void> } | undefined;
+  var loqoRuntime: { stop: () => Promise<void> } | undefined;
 }
-await globalThis.opendeeplRuntime?.stop();
+await globalThis.loqoRuntime?.stop();
 
 const { db, pool } = createDb(connectionString, { poolSize: integer('DATABASE_POOL_SIZE', 10) });
 await runMigrations(db);
@@ -42,7 +42,7 @@ if (seeded.layers > 0 || seeded.prompts > 0 || seededScenarios > 0) {
 const pricing = createPricing(db);
 await pricing.start();
 const queue = await createPgBossQueue(connectionString);
-globalThis.opendeeplRuntime = {
+globalThis.loqoRuntime = {
   stop: async () => {
     await queue.stop({ graceful: false });
     await pool.end();

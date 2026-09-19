@@ -1,9 +1,11 @@
-name: opendeepl sync
+name: loqo sync
 description: >-
-  Runs one step of a repository's translation loop against an opendeepl project: `request` sends the
+  Runs one step of a repository's translation loop against an loqo project: `request` sends the
   source strings, `check` reports whether translation is still in flight, `import` writes the
-  translated values back and opens (or updates) a pull request with them. Check this repository out
-  next to yours (`actions/checkout` with `path: .opendeepl`) and point `uses:` at this directory.
+  translated values back and opens (or updates) a pull request with them. Reference it as
+  `uses: <owner>/loqo/.github/actions/sync@<tag>` (public, or private within your organisation
+  with actions access enabled), or check this repository out next to yours (`actions/checkout` with
+  `path: .loqo`) and point `uses:` at `./.loqo/.github/actions/sync`.
 
 inputs:
   command:
@@ -65,7 +67,7 @@ inputs:
   branch:
     description: import — the single branch the translations land on, force-pushed on every run
     required: false
-    default: opendeepl-translations
+    default: loqo-translations
   pr_title:
     description: import — pull request title
     required: false
@@ -73,11 +75,11 @@ inputs:
   bot_name:
     description: import — commit author name
     required: false
-    default: opendeepl-bot
+    default: loqo-bot
   bot_email:
     description: import — commit author email
     required: false
-    default: opendeepl-bot@users.noreply.github.com
+    default: loqo-bot@users.noreply.github.com
 
 outputs:
   ready:
@@ -109,15 +111,15 @@ runs:
     - name: Install the sync CLI
       shell: bash
       working-directory: ${{ github.action_path }}/../../..
-      run: bun install --frozen-lockfile --filter '@opendeepl/adapters'
+      run: bun install --frozen-lockfile --filter '@loqo/adapters'
 
     - name: ${{ inputs.command }}
       id: sync
       shell: bash
       env:
-        OPENDEEPL_PROJECT: ${{ inputs.project }}
-        OPENDEEPL_BASE_URL: ${{ inputs.base_url }}
-        OPENDEEPL_API_KEY: ${{ inputs.api_key }}
+        LOQO_PROJECT: ${{ inputs.project }}
+        LOQO_BASE_URL: ${{ inputs.base_url }}
+        LOQO_API_KEY: ${{ inputs.api_key }}
         CLI: ${{ github.action_path }}/../../../packages/adapters/src/bin.ts
         COMMAND: ${{ inputs.command }}
         ADAPTER: ${{ inputs.adapter }}

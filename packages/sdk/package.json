@@ -1,7 +1,7 @@
 {
-  "name": "@opendeepl/sdk",
+  "name": "@loqo/sdk",
   "version": "0.1.0",
-  "description": "The opendeepl adapter contract and a typed HTTP client for the platform API.",
+  "description": "The loqo adapter contract and a typed HTTP client for the platform API.",
   "license": "MIT",
   "type": "module",
   "exports": {

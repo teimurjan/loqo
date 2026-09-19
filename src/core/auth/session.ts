@@ -3,7 +3,7 @@ import { and, eq, gt } from 'drizzle-orm';
 import type { Db } from '../../db/client';
 import { type Session, type User, sessions, users } from '../../db/schema';
 
-export const SESSION_COOKIE = 'opendeepl_session';
+export const SESSION_COOKIE = 'loqo_session';
 const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 /** Sliding window: a session used with less than this left gets a fresh 30 days. */
 const RENEW_BELOW_MS = 15 * 24 * 60 * 60 * 1000;

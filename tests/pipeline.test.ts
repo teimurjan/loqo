@@ -21,7 +21,7 @@ import { guardRules, layerRuns, projects, prompts, promptVersions, resources, sc
 import { fakeModel } from './helpers/model';
 import { noopQueue } from './helpers/queue';
 
-const DATABASE_URL = process.env.TEST_DATABASE_URL ?? 'postgres://opendeepl:opendeepl@localhost:5432/opendeepl_test';
+const DATABASE_URL = process.env.TEST_DATABASE_URL ?? 'postgres://loqo:loqo@localhost:5432/loqo_test';
 
 const { db, pool } = createDb(DATABASE_URL);
 const calls: string[] = [];

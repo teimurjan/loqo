@@ -1,9 +1,9 @@
 /**
- * The canonical resource model is the SDK's contract (`@opendeepl/sdk`): what adapters send to
+ * The canonical resource model is the SDK's contract (`@loqo/sdk`): what adapters send to
  * `/import` and read back from `/translations`. This module adds what only the pipeline needs.
  */
-export type { PulledResource, PulledTarget, ResourceKey } from '@opendeepl/sdk';
-export { pulledTarget } from '@opendeepl/sdk';
+export type { PulledResource, PulledTarget, ResourceKey } from '@loqo/sdk';
+export { pulledTarget } from '@loqo/sdk';
 
 /** Plugin hooks may answer synchronously; the pipeline awaits either way. */
 export type MaybePromise<T> = T | Promise<T>;

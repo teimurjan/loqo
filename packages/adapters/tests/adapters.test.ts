@@ -2,13 +2,13 @@ import { describe, expect, test } from 'bun:test';
 import { cp, mkdir, mkdtemp, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { pulledTarget } from '@opendeepl/sdk';
+import { pulledTarget } from '@loqo/sdk';
 import { androidXml, parseAndroidResources } from '../src/android-xml';
 import { compositeKey, discoverFiles, globToRegExp } from '../src/files';
 import { xcstrings } from '../src/xcstrings';
 
 const fixtures = join(import.meta.dir, 'fixtures');
-const scratch = () => mkdtemp(join(tmpdir(), 'opendeepl-'));
+const scratch = () => mkdtemp(join(tmpdir(), 'loqo-'));
 
 describe('file discovery', () => {
   test('globs: ** spans directories, * stays inside a segment', () => {

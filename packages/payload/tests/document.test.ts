@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { deepEqual, projectLocale, type PushResource } from '@opendeepl/sdk';
+import { deepEqual, projectLocale, type PushResource } from '@loqo/sdk';
 import { documentToResources, localeWrites, rowsWithoutId, rowsWithUnstableId } from '../src/document';
 import { buildFieldConfigMap } from '../src/fields';
 import type { LexicalCodec } from '../src/rich-text';

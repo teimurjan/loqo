@@ -20,5 +20,5 @@
     "isolatedModules": true,
     "paths": { "@/*": ["./src/*"] }
   },
-  "include": ["src", "packages/*/build.ts", "translate.config.ts", "drizzle.config.ts", "tests", "packages/*/src", "packages/*/tests"]
+  "include": ["src", "scripts", "packages/*/build.ts", "translate.config.ts", "drizzle.config.ts", "tests", "packages/*/src", "packages/*/tests"]
 }

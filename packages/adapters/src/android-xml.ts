@@ -1,5 +1,5 @@
 import { basename, dirname, join } from 'node:path';
-import { type Adapter, pluralCategories, type PulledResource, type PushResource } from '@opendeepl/sdk';
+import { type Adapter, pluralCategories, type PulledResource, type PushResource } from '@loqo/sdk';
 import {
   compositeKey,
   discoverFiles,

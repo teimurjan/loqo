@@ -8,7 +8,7 @@ import { Button } from './button';
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from './sheet';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip';
 
-const STORAGE_KEY = 'opendeepl.sidebar';
+const STORAGE_KEY = 'loqo.sidebar';
 const SIDEBAR_WIDTH = '16rem';
 const SIDEBAR_WIDTH_MOBILE = '18rem';
 const SIDEBAR_WIDTH_ICON = '3rem';
