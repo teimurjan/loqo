@@ -1,36 +1,11 @@
 import { Handle, type NodeProps, Position } from '@xyflow/react';
 import { Code, FileText, Layers, ShieldCheck, Sparkles, Target } from 'lucide-react';
-import { memo, type ReactNode } from 'react';
+import { memo } from 'react';
+import { Meta, Shell, Title } from '../../components/flow/node';
 import { Badge } from '../../components/ui/badge';
-import { cn } from '../../lib/utils';
 import type { FlowNode, GuardData, LayerData, PromptData, SourceData, StageData, TargetData } from './layout';
 
 type Props<Data> = NodeProps<Extract<FlowNode, { data: Data }>>;
-
-const Shell = ({ selected, inactive, tone, children }: { selected: boolean; inactive?: boolean; tone: 'neutral' | 'primary' | 'info' | 'warning'; children: ReactNode }) => (
-  <div
-    className={cn(
-      'w-[260px] rounded-lg border bg-card px-3 py-2 text-left text-card-foreground shadow-xs transition-colors',
-      tone === 'primary' && 'border-primary/40',
-      tone === 'info' && 'border-info/40',
-      tone === 'warning' && 'border-warning/50',
-      selected && 'ring-2 ring-ring',
-      inactive && 'opacity-45 border-dashed',
-    )}
-  >
-    {children}
-  </div>
-);
-
-const Title = ({ icon, children, right }: { icon: ReactNode; children: ReactNode; right?: ReactNode }) => (
-  <div className="flex items-center gap-1.5">
-    <span className="text-muted-foreground [&>svg]:size-3.5">{icon}</span>
-    <span className="min-w-0 flex-1 truncate font-mono text-xs font-semibold">{children}</span>
-    {right}
-  </div>
-);
-
-const Meta = ({ children }: { children: ReactNode }) => <div className="mt-1 truncate text-[11px] text-muted-foreground">{children}</div>;
 
 const SourceNode = memo(({ data, selected }: Props<SourceData>) => (
   <Shell selected={selected} tone="neutral">
@@ -54,10 +29,7 @@ const LayerNode = memo(({ data, selected }: Props<LayerData>) => {
   return (
     <Shell selected={selected} inactive={explain.state !== 'active'} tone="primary">
       <Handle type="target" position={Position.Left} />
-      <Title
-        icon={<Layers />}
-        right={explain.layer.builtin ? <Badge variant="muted">built-in</Badge> : <Badge variant="info">scenario</Badge>}
-      >
+      <Title icon={<Layers />} right={explain.layer.builtin ? null : <Badge variant="info">scenario</Badge>}>
         {explain.layer.name}
       </Title>
       <Meta>

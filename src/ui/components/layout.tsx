@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Activity, BarChart3, FolderOpen, Layers, LogOut, ScrollText } from 'lucide-react';
+import { Activity, BarChart3, FolderOpen, LogOut, ScrollText } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router';
 import logo from '../../../public/logo.svg';
@@ -54,7 +54,6 @@ const ProjectsSub = ({ active }: { active?: string }) => {
 
 const NAV: NavItem[] = [
   { to: '/', label: 'Projects', icon: FolderOpen, roots: ['/projects', '/resources'], sub: { Menu: ProjectsSub, activeKey: projectSlug } },
-  { to: '/layers', label: 'Layers', icon: Layers },
   { to: '/queue', label: 'Queue', icon: Activity },
   { to: '/analytics', label: 'Cost', icon: BarChart3 },
   { to: '/audit', label: 'Audit Log', icon: ScrollText },

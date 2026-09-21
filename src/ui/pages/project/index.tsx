@@ -1,22 +1,18 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Play, Settings2 } from 'lucide-react';
+import { Layers, Play, Settings2 } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router';
-import { Empty, ErrorNote, PageHeader } from '../components/layout';
-import { OriginBadge, StatusBadge } from '../components/status';
-import { Badge } from '../components/ui/badge';
-import { Button } from '../components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '../components/ui/dialog';
-import { Input, Label, Select, Textarea } from '../components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
-import { api } from '../lib/api';
-import { useCan } from '../lib/auth';
-import { ApiKeysDialog } from './project-keys';
-import { MembersDialog } from './project-members';
-import { truncate } from '../lib/utils';
-import type { ProjectWithCounts } from '../../core/projects/service';
-import type { ResourceListItem } from '../../core/resources/service';
-import { type TargetStatus, targetStatus } from '../../db/schema';
+import { Empty, ErrorNote, PageHeader } from '../../components/layout';
+import { OriginBadge, StatusBadge } from '../../components/status';
+import { Badge } from '../../components/ui/badge';
+import { Button } from '../../components/ui/button';
+import { Input, Select } from '../../components/ui/input';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table';
+import { api } from '../../lib/api';
+import { useCan } from '../../lib/auth';
+import { truncate } from '../../lib/utils';
+import type { ResourceListItem } from '../../../core/resources/service';
+import { type TargetStatus, targetStatus } from '../../../db/schema';
 
 const PAGE_SIZE = 50;
 
@@ -63,82 +59,6 @@ const TargetSummary = ({ targets, onStatus }: TargetSummaryProps) => {
         </span>
       ) : null}
     </div>
-  );
-};
-
-const SettingsDialog = ({ project }: { project: ProjectWithCounts }) => {
-  const queryClient = useQueryClient();
-  const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({
-    name: project.name,
-    targetLocales: project.targetLocales.join(', '),
-    debounceSeconds: String(project.debounceSeconds),
-    glossary: JSON.stringify(project.glossary, null, 2),
-    extraInstructions: JSON.stringify(project.extraInstructions, null, 2),
-  });
-  const save = useMutation({
-    mutationFn: () =>
-      api.projects.update(project.slug, {
-        name: form.name,
-        targetLocales: form.targetLocales.split(/[\s,]+/).filter(Boolean),
-        debounceSeconds: Number(form.debounceSeconds),
-        glossary: JSON.parse(form.glossary),
-        extraInstructions: JSON.parse(form.extraInstructions),
-      }),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: ['project', project.slug] });
-      setOpen(false);
-    },
-  });
-
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline">
-          <Settings2 /> Settings
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-2xl">
-        <DialogTitle>Project settings</DialogTitle>
-        <DialogDescription>Glossary and extra instructions are per locale and reach the translate layer as prompt context.</DialogDescription>
-        <form
-          className="grid gap-3"
-          onSubmit={(event) => {
-            event.preventDefault();
-            save.mutate();
-          }}
-        >
-          <div className="grid grid-cols-3 gap-3">
-            <div className="col-span-2 grid gap-1.5">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-            </div>
-            <div className="grid gap-1.5">
-              <Label htmlFor="debounce">Debounce (s)</Label>
-              <Input id="debounce" type="number" min={0} value={form.debounceSeconds} onChange={(e) => setForm({ ...form, debounceSeconds: e.target.value })} />
-            </div>
-          </div>
-          <div className="grid gap-1.5">
-            <Label htmlFor="targets">Target locales</Label>
-            <Input id="targets" value={form.targetLocales} onChange={(e) => setForm({ ...form, targetLocales: e.target.value })} />
-          </div>
-          <div className="grid gap-1.5">
-            <Label htmlFor="glossary">Glossary (JSON: [{'{'} term, translations: {'{'} locale: value {'}'} {'}'}])</Label>
-            <Textarea id="glossary" className="font-mono text-xs" rows={6} value={form.glossary} onChange={(e) => setForm({ ...form, glossary: e.target.value })} />
-          </div>
-          <div className="grid gap-1.5">
-            <Label htmlFor="extra">Extra instructions (JSON: {'{'} locale: text {'}'})</Label>
-            <Textarea id="extra" className="font-mono text-xs" rows={4} value={form.extraInstructions} onChange={(e) => setForm({ ...form, extraInstructions: e.target.value })} />
-          </div>
-          <ErrorNote error={save.error} />
-          <div className="flex justify-end">
-            <Button type="submit" disabled={save.isPending}>
-              Save
-            </Button>
-          </div>
-        </form>
-      </DialogContent>
-    </Dialog>
   );
 };
 
@@ -201,12 +121,17 @@ export const ProjectPage = () => {
                 <Play /> Translate missing
               </Button>
             ) : null}
+            <Button variant="outline" asChild>
+              <Link to={`/projects/${slug}/layers`}>
+                <Layers /> Layers
+              </Link>
+            </Button>
             {canAdmin ? (
-              <>
-                <ApiKeysDialog slug={slug} />
-                <MembersDialog slug={slug} />
-                <SettingsDialog key={project.data.updatedAt.toString()} project={project.data} />
-              </>
+              <Button variant="outline" asChild>
+                <Link to={`/projects/${slug}/settings`}>
+                  <Settings2 /> Settings
+                </Link>
+              </Button>
             ) : null}
           </>
         }

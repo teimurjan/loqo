@@ -1,15 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Trash2, Users } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import { ErrorNote } from '../components/layout';
-import { Badge } from '../components/ui/badge';
-import { Button } from '../components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '../components/ui/dialog';
-import { Input, Label, Select } from '../components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
-import { api } from '../lib/api';
-import { useMe } from '../lib/auth';
-import { type MemberRole, memberRole } from '../../db/schema';
+import { ErrorNote } from '../../components/layout';
+import { Badge } from '../../components/ui/badge';
+import { Button } from '../../components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
+import { Input, Label, Select } from '../../components/ui/input';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table';
+import { api } from '../../lib/api';
+import { useMe } from '../../lib/auth';
+import { type MemberRole, memberRole } from '../../../db/schema';
 
 const ROLE_HINT: Record<MemberRole, string> = {
   admin: 'settings, members, flows',
@@ -17,12 +17,11 @@ const ROLE_HINT: Record<MemberRole, string> = {
   reader: 'view only',
 };
 
-export const MembersDialog = ({ slug }: { slug: string }) => {
+export const MembersSection = ({ slug }: { slug: string }) => {
   const me = useMe();
   const queryClient = useQueryClient();
-  const [open, setOpen] = useState(false);
   const [form, setForm] = useState<{ email: string; role: MemberRole }>({ email: '', role: 'editor' });
-  const members = useQuery({ queryKey: ['members', slug], queryFn: () => api.members.list(slug), enabled: open });
+  const members = useQuery({ queryKey: ['members', slug], queryFn: () => api.members.list(slug) });
   const refresh = () => {
     void queryClient.invalidateQueries({ queryKey: ['members', slug] });
     void queryClient.invalidateQueries({ queryKey: ['me'] });
@@ -38,15 +37,12 @@ export const MembersDialog = ({ slug }: { slug: string }) => {
   const remove = useMutation({ mutationFn: (id: string) => api.members.remove(slug, id), onSuccess: refresh });
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline">
-          <Users /> Members
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-2xl">
-        <DialogTitle>Members</DialogTitle>
-        <DialogDescription>Invite by Google account email. An invite stays pending until that person signs in.</DialogDescription>
+    <Card>
+      <CardHeader>
+        <CardTitle>Members</CardTitle>
+        <CardDescription>Invite by Google account email. An invite stays pending until that person signs in.</CardDescription>
+      </CardHeader>
+      <CardContent className="grid gap-3">
         <form
           className="flex flex-wrap items-end gap-2"
           onSubmit={(event) => {
@@ -117,7 +113,7 @@ export const MembersDialog = ({ slug }: { slug: string }) => {
             </TableBody>
           </Table>
         </div>
-      </DialogContent>
-    </Dialog>
+      </CardContent>
+    </Card>
   );
 };

@@ -1,15 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Check, Copy, KeyRound, Trash2 } from 'lucide-react';
+import { Check, Copy, Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import { ErrorNote } from '../components/layout';
-import { Badge } from '../components/ui/badge';
-import { Button } from '../components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '../components/ui/dialog';
-import { Input, Label, Select } from '../components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
-import { api } from '../lib/api';
-import { formatDate } from '../lib/utils';
-import { type MemberRole, memberRole } from '../../db/schema';
+import { ErrorNote } from '../../components/layout';
+import { Badge } from '../../components/ui/badge';
+import { Button } from '../../components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
+import { Input, Label, Select } from '../../components/ui/input';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table';
+import { api } from '../../lib/api';
+import { formatDate } from '../../lib/utils';
+import { type MemberRole, memberRole } from '../../../db/schema';
 
 const ROLE_HINT: Record<MemberRole, string> = {
   reader: 'read translations',
@@ -51,12 +51,11 @@ const FreshToken = ({ name, token, slug }: { name: string; token: string; slug: 
   </div>
 );
 
-export const ApiKeysDialog = ({ slug }: { slug: string }) => {
+export const ApiKeysSection = ({ slug }: { slug: string }) => {
   const queryClient = useQueryClient();
-  const [open, setOpen] = useState(false);
   const [form, setForm] = useState<{ name: string; role: MemberRole }>({ name: '', role: 'editor' });
   const [fresh, setFresh] = useState<{ name: string; token: string } | null>(null);
-  const keys = useQuery({ queryKey: ['keys', slug], queryFn: () => api.keys.list(slug), enabled: open });
+  const keys = useQuery({ queryKey: ['keys', slug], queryFn: () => api.keys.list(slug) });
   const refresh = () => void queryClient.invalidateQueries({ queryKey: ['keys', slug] });
   const create = useMutation({
     mutationFn: () => api.keys.create(slug, form),
@@ -69,23 +68,14 @@ export const ApiKeysDialog = ({ slug }: { slug: string }) => {
   const remove = useMutation({ mutationFn: (id: string) => api.keys.remove(slug, id), onSuccess: refresh });
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(next) => {
-        setOpen(next);
-        if (!next) setFresh(null);
-      }}
-    >
-      <DialogTrigger asChild>
-        <Button variant="outline">
-          <KeyRound /> API keys
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-2xl">
-        <DialogTitle>API keys</DialogTitle>
-        <DialogDescription>
+    <Card>
+      <CardHeader>
+        <CardTitle>API keys</CardTitle>
+        <CardDescription>
           What your repo's sync step authenticates with. A key is bound to this project and one role; pass it to <code>createClient</code> from <code>@loqo/sdk</code>.
-        </DialogDescription>
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="grid gap-3">
         <form
           className="flex flex-wrap items-end gap-2"
           onSubmit={(event) => {
@@ -151,7 +141,7 @@ export const ApiKeysDialog = ({ slug }: { slug: string }) => {
             </TableBody>
           </Table>
         </div>
-      </DialogContent>
-    </Dialog>
+      </CardContent>
+    </Card>
   );
 };

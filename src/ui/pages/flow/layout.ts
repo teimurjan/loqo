@@ -37,7 +37,9 @@ const isActiveLayer = (layer: LayerExplain): boolean => layer.state === 'active'
 type Step = { kind: 'layer'; layer: LayerExplain } | { kind: 'stage'; stage: StageExplain };
 
 const positionOf = (step: Step) => (step.kind === 'layer' ? step.layer.layer : step.stage);
-const isActiveStep = (step: Step): boolean => (step.kind === 'layer' ? isActiveLayer(step.layer) : step.stage.enabled);
+
+/** Another scenario's layer, or a code stage whose matcher rejects the sample, has nothing to show here. */
+const belongsHere = (step: Step): boolean => (step.kind === 'layer' ? step.layer.state !== 'out-of-scope' : step.stage.enabled);
 
 /** The chain the worker runs: layers and code stages interleaved by the pipeline's own ordering. */
 const stepsOf = (flow: FlowExplain): Step[] =>
@@ -47,13 +49,14 @@ const stepsOf = (flow: FlowExplain): Step[] =>
 
 /**
  * Column layout of the pipeline: source → each step (a layer with its prompts stacked beneath,
- * or a code stage) → every guard → target. Positions are computed, never stored, so the canvas
- * can't drift from what the worker actually resolves. Node type names avoid React Flow's
+ * or a code stage) → every guard → target. What belongs to this scenario is always drawn, dimmed
+ * when switched off, so a disabled layer, prompt or guard stays reachable to switch back on;
+ * what belongs to another scenario is left out. Positions are computed, never stored, so the
+ * canvas can't drift from what the worker actually resolves. Node type names avoid React Flow's
  * built-in `input`, `output` and `default`, which its stylesheet paints as plain white cards.
  */
-export const layoutFlow = (flow: FlowExplain, showInactive: boolean, sourceLocale: string): { nodes: FlowNode[]; edges: Edge[] } => {
-  const steps = stepsOf(flow).filter((step) => showInactive || isActiveStep(step));
-  const guards = flow.guards.filter((guard) => showInactive || guard.enabled);
+export const layoutFlow = (flow: FlowExplain, sourceLocale: string): { nodes: FlowNode[]; edges: Edge[] } => {
+  const steps = stepsOf(flow).filter(belongsHere);
   const nodes: FlowNode[] = [];
   const edges: Edge[] = [];
   const column = (index: number) => index * COLUMN_PITCH;
@@ -75,7 +78,7 @@ export const layoutFlow = (flow: FlowExplain, showInactive: boolean, sourceLocal
     edges.push(edge(previous, id, { animated: isActiveLayer(layer) }));
     previous = id;
     layer.prompts
-      .filter((prompt) => showInactive || prompt.state === 'active')
+      .filter((prompt) => prompt.state !== 'out-of-scope')
       .forEach((prompt, row) => {
         const promptId = promptNodeId(layer.layer.id, prompt.prompt.id);
         nodes.push({ id: promptId, type: 'prompt', position: { x: column(index + 1), y: PROMPT_OFFSET + row * ROW_PITCH }, data: { kind: 'prompt', layer, prompt } });
@@ -85,14 +88,14 @@ export const layoutFlow = (flow: FlowExplain, showInactive: boolean, sourceLocal
 
   const guardColumn = column(steps.length + 1);
   const outputId = 'target';
-  const outputColumn = column(steps.length + (guards.length > 0 ? 2 : 1));
-  guards.forEach((guard, row) => {
+  const outputColumn = column(steps.length + (flow.guards.length > 0 ? 2 : 1));
+  flow.guards.forEach((guard, row) => {
     const id = guardNodeId(guard.name);
     nodes.push({ id, type: 'guard', position: { x: guardColumn, y: row * ROW_PITCH }, data: { kind: 'guard', guard } });
     edges.push(edge(previous, id, { style: guard.enabled ? undefined : { opacity: 0.35 } }));
     edges.push(edge(id, outputId, { style: guard.enabled ? undefined : { opacity: 0.35 } }));
   });
-  if (guards.length === 0) edges.push(edge(previous, outputId));
+  if (flow.guards.length === 0) edges.push(edge(previous, outputId));
 
   nodes.push({ id: outputId, type: 'target', position: { x: outputColumn, y: 0 }, data: { kind: 'target', processors: flow.processors.output, locale: flow.sample.locale } });
   return { nodes, edges };

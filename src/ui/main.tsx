@@ -9,6 +9,7 @@ import { LayersPage } from './pages/flow';
 import { LoginPage } from './pages/login';
 import { AnalyticsPage, AuditPage, QueuePage } from './pages/ops';
 import { ProjectPage } from './pages/project';
+import { ProjectSettingsPage } from './pages/project/settings';
 import { ProjectsPage } from './pages/projects';
 import { ResourcePage } from './pages/resource';
 
@@ -21,8 +22,9 @@ const router = createBrowserRouter([
     children: [
       { index: true, Component: ProjectsPage },
       { path: 'projects/:slug', Component: ProjectPage },
+      { path: 'projects/:slug/layers', Component: LayersPage },
+      { path: 'projects/:slug/settings', Component: ProjectSettingsPage },
       { path: 'resources/:id', Component: ResourcePage },
-      { path: 'layers', Component: LayersPage },
       { path: 'queue', Component: QueuePage },
       { path: 'analytics', Component: AnalyticsPage },
       { path: 'audit', Component: AuditPage },

@@ -1,11 +1,12 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Trash2 } from 'lucide-react';
-import { type ReactNode, useState } from 'react';
+import { useState } from 'react';
+import { NodeSheet, Row, Section } from '../../components/flow/panel';
 import { ErrorNote } from '../../components/layout';
 import { Badge } from '../../components/ui/badge';
 import { Button } from '../../components/ui/button';
 import { Input, Label, Select, Textarea } from '../../components/ui/input';
-import { Sheet, SheetContent, SheetDescription, SheetTitle } from '../../components/ui/sheet';
+import { SheetDescription, SheetTitle } from '../../components/ui/sheet';
 import { Switch } from '../../components/ui/switch';
 import { api } from '../../lib/api';
 import { REASONING_EFFORTS } from '../../../core/layers/service';
@@ -14,20 +15,6 @@ import { ParamsForm } from './params-form';
 import { PromptEditor } from './prompt-editor';
 
 export type PanelContext = { slug: string; scenarioId: string; canEdit: boolean; refresh: () => void };
-
-const Section = ({ title, children }: { title: string; children: ReactNode }) => (
-  <section className="grid gap-2">
-    <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{title}</h3>
-    {children}
-  </section>
-);
-
-const Row = ({ label, children }: { label: string; children: ReactNode }) => (
-  <div className="flex items-baseline justify-between gap-3 text-sm">
-    <span className="text-muted-foreground">{label}</span>
-    <span className="min-w-0 truncate text-right font-mono text-xs">{children}</span>
-  </div>
-);
 
 const DeleteButton = ({ label, onClick, pending }: { label: string; onClick: () => void; pending: boolean }) => (
   <Button variant="outline" size="sm" className="text-destructive" onClick={onClick} disabled={pending}>
@@ -286,43 +273,41 @@ const InfoPanel = ({ title, rows }: { title: string; rows: { label: string; valu
 );
 
 export const NodePanel = ({ data, ctx, onClose }: { data: FlowNodeData | null; ctx: PanelContext; onClose: () => void }) => (
-  <Sheet open={data !== null} onOpenChange={(open) => (open ? undefined : onClose())}>
-    <SheetContent className="w-full overflow-y-auto p-6 sm:max-w-lg">
-      {data?.kind === 'layer' ? <LayerPanel key={data.explain.layer.id} data={data} ctx={ctx} /> : null}
-      {data?.kind === 'prompt' ? <PromptPanel key={data.prompt.prompt.id} data={data} ctx={ctx} /> : null}
-      {data?.kind === 'guard' ? <GuardPanel key={guardKey(data)} data={data} ctx={ctx} /> : null}
-      {data?.kind === 'stage' ? (
-        <InfoPanel
-          title={data.stage.name}
-          rows={[
-            { label: 'kind', value: 'code stage (translate.config.ts)' },
-            { label: 'position', value: String(data.stage.position) },
-            { label: 'description', value: data.stage.description ?? '—' },
-            { label: 'state', value: data.stage.enabled ? 'runs for this sample' : 'does not match this sample' },
-          ]}
-        />
-      ) : null}
-      {data?.kind === 'source' ? (
-        <InfoPanel
-          title="Source"
-          rows={[
-            { label: 'sample', value: data.sample.resourceId ? data.sample.key : 'synthetic' },
-            { label: 'tags', value: data.sample.tags.join(', ') || '—' },
-            { label: 'processors', value: data.processors.join(', ') || '—' },
-          ]}
-        />
-      ) : null}
-      {data?.kind === 'target' ? (
-        <InfoPanel
-          title="Target"
-          rows={[
-            { label: 'locale', value: data.locale },
-            { label: 'processors', value: data.processors.join(', ') || '—' },
-          ]}
-        />
-      ) : null}
-    </SheetContent>
-  </Sheet>
+  <NodeSheet open={data !== null} onClose={onClose}>
+    {data?.kind === 'layer' ? <LayerPanel key={data.explain.layer.id} data={data} ctx={ctx} /> : null}
+    {data?.kind === 'prompt' ? <PromptPanel key={data.prompt.prompt.id} data={data} ctx={ctx} /> : null}
+    {data?.kind === 'guard' ? <GuardPanel key={guardKey(data)} data={data} ctx={ctx} /> : null}
+    {data?.kind === 'stage' ? (
+      <InfoPanel
+        title={data.stage.name}
+        rows={[
+          { label: 'kind', value: 'code stage (translate.config.ts)' },
+          { label: 'position', value: String(data.stage.position) },
+          { label: 'description', value: data.stage.description ?? '—' },
+          { label: 'state', value: data.stage.enabled ? 'runs for this sample' : 'does not match this sample' },
+        ]}
+      />
+    ) : null}
+    {data?.kind === 'source' ? (
+      <InfoPanel
+        title="Source"
+        rows={[
+          { label: 'sample', value: data.sample.resourceId ? data.sample.key : 'synthetic' },
+          { label: 'tags', value: data.sample.tags.join(', ') || '—' },
+          { label: 'processors', value: data.processors.join(', ') || '—' },
+        ]}
+      />
+    ) : null}
+    {data?.kind === 'target' ? (
+      <InfoPanel
+        title="Target"
+        rows={[
+          { label: 'locale', value: data.locale },
+          { label: 'processors', value: data.processors.join(', ') || '—' },
+        ]}
+      />
+    ) : null}
+  </NodeSheet>
 );
 
 const guardKey = (data: GuardData): string => `${data.guard.name}:${data.guard.rule?.id ?? 'config'}:${data.guard.rule?.updatedAt ?? ''}`;
