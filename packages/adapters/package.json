@@ -8,6 +8,7 @@
     "url": "git+https://github.com/teimurjan/loqo.git",
     "directory": "packages/adapters"
   },
+  "homepage": "https://loqo.dev",
   "type": "module",
   "exports": {
     ".": {
