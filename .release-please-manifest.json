@@ -1,5 +1,5 @@
 {
   "packages/sdk": "0.1.0",
   "packages/adapters": "0.0.0",
-  "packages/payload": "0.0.0"
+  "packages/payload": "0.1.0"
 }
