@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "description": "loqo adapter and plugin for Payload CMS: documents in, translations back, inside your app.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teimurjan/loqo.git",
+    "directory": "packages/payload"
+  },
   "type": "module",
   "exports": {
     ".": {
@@ -30,6 +35,9 @@
     "dist",
     "src"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "bun build.ts"
   },

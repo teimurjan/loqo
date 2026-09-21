@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://loqo.dev",
+  "repository": "git+https://github.com/teimurjan/loqo.git",
   "type": "module",
   "workspaces": [
     "packages/*"
@@ -14,7 +15,8 @@
     "test": "bun test",
     "typecheck": "tsc --noEmit",
     "build:packages": "for p in sdk adapters payload; do bun run --cwd packages/$p build || exit 1; done",
-    "pack:packages": "bun run build:packages && mkdir -p dist/packages && for p in sdk adapters payload; do (cd packages/$p && bun pm pack --quiet --destination ../../dist/packages) || exit 1; done"
+    "pack:packages": "bun run build:packages && mkdir -p dist/packages && for p in sdk adapters payload; do (cd packages/$p && bun pm pack --quiet --destination ../../dist/packages) || exit 1; done",
+    "setup:npm-oidc": "bun scripts/release/setup-npm-oidc.ts"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^4.0.54",
