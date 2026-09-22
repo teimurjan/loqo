@@ -96,6 +96,9 @@ const SourcePanel = ({ resource }: { resource: ResourceDetail }) => {
   );
 };
 
+/** File adapters key a resource by a JSON of its parts and repeat them in `meta`; the inner key reads as the title, the rest sits in the Source panel. */
+const titleOf = (resource: ResourceDetail): string => (typeof resource.meta.key === 'string' ? resource.meta.key : resource.key);
+
 const FilterChip = ({ active, onClick, children }: { active: boolean; onClick: () => void; children: ReactNode }) => (
   <Button size="sm" variant={active ? 'secondary' : 'ghost'} className="h-7 gap-1.5 px-2.5" onClick={onClick}>
     {children}
@@ -130,8 +133,9 @@ export const ResourcePage = () => {
         <Link to={`/projects/${data.project.slug}`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
           <ArrowLeft className="size-4" /> {data.project.name}
         </Link>
-        <div className="mt-1 flex items-center gap-1">
-          <h1 className="min-w-0 break-all font-mono text-lg font-semibold leading-tight">{data.key}</h1>
+        <div className="mt-1 flex items-center gap-2">
+          <h1 className="min-w-0 break-all font-mono text-lg font-semibold leading-tight">{titleOf(data)}</h1>
+          {typeof data.meta.quantity === 'string' ? <Badge variant="outline">{data.meta.quantity}</Badge> : null}
           <CopyButton value={data.key} />
         </div>
       </div>
