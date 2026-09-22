@@ -7,7 +7,7 @@ import type { ProjectInput, ProjectWithCounts } from '../../core/projects/servic
 import type { ResourceDetail, ResourceListItem } from '../../core/resources/service';
 import type { FlowExplain } from '../../core/scenarios/flow';
 import type { ScenarioInput } from '../../core/scenarios/service';
-import type { AuditEntry, GuardRule, Layer, LayerOverride, MemberRole, Project, ProjectMember, PromptVersion, Scenario, Target } from '../../db/schema';
+import type { AuditEntry, GuardRule, Layer, LayerOverride, MemberRole, Project, ProjectMember, PromptVersion, Scenario, Target, TargetStatus } from '../../db/schema';
 
 export class ApiError extends Error {
   constructor(
@@ -71,7 +71,7 @@ export const api = {
     create: (input: ProjectInput) => request<Project>('POST', '/api/projects', input),
     update: (slug: string, input: Partial<ProjectInput>) => request<Project>('PATCH', `/api/projects/${slug}`, input),
     remove: (slug: string) => request<{ ok: true }>('DELETE', `/api/projects/${slug}`),
-    translate: (slug: string, input: { locales?: string[]; force?: boolean }) =>
+    translate: (slug: string, input: { locales?: string[]; statuses?: TargetStatus[]; force?: boolean }) =>
       request<{ enqueued: number }>('POST', `/api/projects/${slug}/translate`, input),
     resources: (slug: string, params: ResourceQuery) =>
       request<{ items: ResourceListItem[]; total: number }>('GET', `/api/projects/${slug}/resources${query(params)}`),

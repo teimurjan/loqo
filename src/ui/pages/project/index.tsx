@@ -1,5 +1,5 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Layers, Play, Settings2 } from 'lucide-react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Layers, Settings2 } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router';
 import { Empty, ErrorNote, PageHeader } from '../../components/layout';
@@ -13,6 +13,7 @@ import { useCan } from '../../lib/auth';
 import { truncate } from '../../lib/utils';
 import type { ResourceListItem } from '../../../core/resources/service';
 import { type TargetStatus, targetStatus } from '../../../db/schema';
+import { TranslateDialog } from './translate-dialog';
 
 const PAGE_SIZE = 50;
 
@@ -90,17 +91,11 @@ export const ProjectPage = () => {
     refetchInterval: 5000,
   });
   const [queued, setQueued] = useState<number | null>(null);
-  const invalidate = () => {
+  const onQueued = (enqueued: number) => {
+    setQueued(enqueued);
     void queryClient.invalidateQueries({ queryKey: ['project', slug] });
     void queryClient.invalidateQueries({ queryKey: ['resources', slug] });
   };
-  const translate = useMutation({
-    mutationFn: (force: boolean) => api.projects.translate(slug, { force }),
-    onSuccess: ({ enqueued }) => {
-      setQueued(enqueued);
-      invalidate();
-    },
-  });
   const canEdit = useCan(slug, 'editor');
   const canAdmin = useCan(slug, 'admin');
 
@@ -116,11 +111,7 @@ export const ProjectPage = () => {
         description={`${project.data.sourceLocale} → ${locales.join(', ')}`}
         actions={
           <>
-            {canEdit ? (
-              <Button variant="outline" onClick={() => translate.mutate(false)} disabled={translate.isPending}>
-                <Play /> Translate missing
-              </Button>
-            ) : null}
+            {canEdit ? <TranslateDialog slug={slug} counts={project.data.counts} onQueued={onQueued} /> : null}
             <Button variant="outline" asChild>
               <Link to={`/projects/${slug}/layers`}>
                 <Layers /> Layers
@@ -144,8 +135,6 @@ export const ProjectPage = () => {
           </Link>
         </div>
       ) : null}
-      <ErrorNote error={translate.error} />
-
       <div className="mb-4 flex flex-wrap items-center gap-2">
         <Input className="w-64" placeholder="Search key or source" value={filter.q} onChange={(e) => setFilter({ q: e.target.value })} />
         <Select value={filter.status} onChange={(e) => setFilter({ status: e.target.value })}>

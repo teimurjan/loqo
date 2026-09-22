@@ -146,7 +146,13 @@ export const projectRoutes = (ctx: AppContext) => {
         const project = await requireProject(rc, req.params.slug, 'editor');
         const body = await parseOptionalBody(
           req,
-          z.object({ locales: z.array(z.string()).optional(), force: z.boolean().default(false), prefix: z.string().min(1).optional(), tags: tagList.optional() }),
+          z.object({
+            locales: z.array(z.string()).optional(),
+            statuses: z.array(z.enum(targetStatus.enumValues)).min(1).optional(),
+            force: z.boolean().default(false),
+            prefix: z.string().min(1).optional(),
+            tags: tagList.optional(),
+          }),
         );
         const enqueued = await enqueueProject(rc, project, body);
         await recordAudit(rc.db, { actor: actorOf(rc), action: 'project.translate', projectId: project.id, detail: { ...body, enqueued } });

@@ -97,8 +97,11 @@ export type ImportOptions = {
   enqueue?: boolean;
 };
 
-/** Queue what is missing, stale, rejected or failed — project-wide or within a scope; `force` re-queues translated values too. */
-export type TranslateOptions = ResourceScope & { locales?: string[]; force?: boolean };
+/**
+ * Queue what is missing, stale, rejected or failed — project-wide or within a scope; `force` re-queues
+ * translated values too. `statuses` narrows that to the given ones, e.g. `['rejected']`.
+ */
+export type TranslateOptions = ResourceScope & { locales?: string[]; statuses?: TargetStatus[]; force?: boolean };
 
 export type TranslationRow = {
   id: string;

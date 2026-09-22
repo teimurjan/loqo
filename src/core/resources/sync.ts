@@ -1,7 +1,7 @@
 import { and, eq, inArray, ne, notInArray, or, sql } from 'drizzle-orm';
 import type { ResolvedConfig } from '../../config';
 import type { Db } from '../../db/client';
-import { type Project, type Resource, resources, targets } from '../../db/schema';
+import { type Project, type Resource, resources, targets, type TargetStatus } from '../../db/schema';
 import { pluralCategories } from '../model/locales';
 import { sourceRevisionOf } from '../model/revision';
 import { type PulledResource, type PulledTarget, pulledTarget } from '../model/types';
@@ -263,16 +263,17 @@ export const syncProject = async (
   return summary;
 };
 
-/** Targets worth (re)queuing by hand: missing, stale, rejected or failed — project-wide or within a scope. */
+/** What a manual translate queues by default; `force` re-queues translated values too. */
+const REQUEUEABLE: TargetStatus[] = ['pending', 'rejected', 'failed'];
+
+/** Targets worth (re)queuing by hand — project-wide or within a scope, optionally narrowed to some statuses. */
 export const enqueueProject = async (
   deps: { db: Db; queue: TranslateQueue },
   project: Project,
-  options: ResourceScope & { locales?: string[]; force?: boolean; debounceSeconds?: number },
+  options: ResourceScope & { locales?: string[]; statuses?: TargetStatus[]; force?: boolean; debounceSeconds?: number },
 ): Promise<number> => {
   await reconcileTargets(deps.db, project);
-  const statuses: (typeof targets.$inferSelect)['status'][] = options.force
-    ? ['pending', 'rejected', 'failed', 'translated']
-    : ['pending', 'rejected', 'failed'];
+  const statuses = options.statuses ?? (options.force ? [...REQUEUEABLE, 'translated'] : REQUEUEABLE);
   const rows = await deps.db
     .select({ id: targets.id })
     .from(targets)
