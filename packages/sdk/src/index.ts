@@ -1,4 +1,5 @@
 export { defineAdapter } from './adapter';
+export { unwrapAndroidQuotes } from './android';
 export { type ApiFailure, type ApiResult, type ClientOptions, createClient, type LoqoClient } from './client';
 export {
   arrays,
@@ -24,7 +25,7 @@ export {
 } from './localized';
 export { deepEqual, getAt, isPlainObject, parsePath, type Path, pathKey, setAt } from './object';
 export { pluralCategories } from './plurals';
-export { isPlaceholderOnlyKey, SPECIFIER, SPECIFIER_TYPES, stripSpecifiers } from './specifiers';
+export { isPlaceholderOnlyKey, pluralSpecifiers, SPECIFIER, SPECIFIER_TYPES, stripSpecifiers } from './specifiers';
 export {
   type ApplyOptions,
   type ApplyResult,

@@ -1,3 +1,4 @@
+import { unwrapAndroidQuotes } from '@loqo/sdk';
 import { SPECIFIER_TYPES } from '../guards/specifiers';
 import { hasTag } from '../model/types';
 import type { ValueProcessor } from './types';
@@ -6,12 +7,16 @@ import type { ValueProcessor } from './types';
 // Android quote unwrap (source stage)
 // ---------------------------------------------------------------------------------------------
 
-/** Android resources wrap values in quotes to keep leading/trailing whitespace; the model must not see them. */
+/**
+ * Android resources quote runs of text to keep whitespace and apostrophes; the model must not see
+ * the quotes. The adapter already unwraps what it pulls — this covers a source that reached
+ * `/import` raw.
+ */
 export const androidUnwrapQuotes = (): ValueProcessor => ({
   name: 'android-unwrap-quotes',
   stage: 'source',
   match: (ctx) => hasTag(ctx, 'android'),
-  process: (value) => (value.startsWith('"') && value.endsWith('"') && value.length >= 2 ? value.slice(1, -1) : value),
+  process: unwrapAndroidQuotes,
 });
 
 // ---------------------------------------------------------------------------------------------

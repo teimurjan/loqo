@@ -1,4 +1,4 @@
-import { type Adapter, isPlaceholderOnlyKey, type PulledResource, type PushResource } from '@loqo/sdk';
+import { type Adapter, isPlaceholderOnlyKey, pluralSpecifiers, type PulledResource, type PushResource } from '@loqo/sdk';
 import { clean } from 'unllm';
 import {
   compositeKey,
@@ -91,10 +91,12 @@ export const xcstrings = (options: XcstringsOptions): Adapter => {
           const quantities = isPlural(sourceLocalization)
             ? Object.keys(sourceLocalization.variations.plural)
             : [undefined];
+          // An empty localization means "use the key as the value" in iOS.
+          const sourceOf = (quantity: string | undefined): string => valueFor(sourceLocalization, quantity) || key;
+          const shared = isPlural(sourceLocalization) ? pluralSpecifiers(quantities.map(sourceOf)) : undefined;
 
           for (const quantity of quantities) {
-            // An empty localization means "use the key as the value" in iOS.
-            const source = valueFor(sourceLocalization, quantity) || key;
+            const source = sourceOf(quantity);
             if (!source.trim()) continue;
 
             const targets: Record<string, string> = {};
@@ -107,7 +109,7 @@ export const xcstrings = (options: XcstringsOptions): Adapter => {
               key: compositeKey({ filePath, key, quantity }),
               source,
               tags: ['ios', quantity ? 'plural' : 'string'],
-              meta: { filePath, key, quantity, comment: entry.comment },
+              meta: { filePath, key, quantity, comment: entry.comment, pluralSpecifiers: shared },
               translatable: entry.shouldTranslate !== false,
               targets,
             });

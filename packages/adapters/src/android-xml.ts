@@ -1,5 +1,5 @@
 import { basename, dirname, join } from 'node:path';
-import { type Adapter, pluralCategories, type PulledResource, type PushResource } from '@loqo/sdk';
+import { type Adapter, pluralCategories, pluralSpecifiers, type PulledResource, type PushResource, unwrapAndroidQuotes } from '@loqo/sdk';
 import {
   compositeKey,
   discoverFiles,
@@ -29,24 +29,24 @@ type ParsedResource =
   | { kind: 'plurals'; name: string; attrs: Attributes; items: { quantity: string; value: string }[] }
   | { kind: 'string-array'; name: string; attrs: Attributes; items: string[] };
 
-/** Inner content is kept raw: xliff wrappers, entities and inline tags are part of the value. */
+/** Inner content is kept raw apart from aapt quoting: xliff wrappers, entities and inline tags are part of the value. */
 export const parseAndroidResources = (xml: string): ParsedResource[] => {
   const parsed: ParsedResource[] = [];
   for (const match of xml.matchAll(ELEMENT_SCAN)) {
     const [, stringAttrs, stringValue, pluralAttrs, pluralBody, arrayAttrs, arrayBody] = match;
     if (stringAttrs !== undefined) {
       const attrs = parseAttributes(stringAttrs);
-      if (attrs.name) parsed.push({ kind: 'string', name: attrs.name, attrs, value: stringValue ?? '' });
+      if (attrs.name) parsed.push({ kind: 'string', name: attrs.name, attrs, value: unwrapAndroidQuotes(stringValue ?? '') });
     } else if (pluralAttrs !== undefined) {
       const attrs = parseAttributes(pluralAttrs);
       const items = [...(pluralBody ?? '').matchAll(ITEM_SCAN)].map(([, itemAttrs, value]) => ({
         quantity: parseAttributes(itemAttrs ?? '').quantity ?? 'other',
-        value: value ?? '',
+        value: unwrapAndroidQuotes(value ?? ''),
       }));
       if (attrs.name) parsed.push({ kind: 'plurals', name: attrs.name, attrs, items });
     } else if (arrayAttrs !== undefined) {
       const attrs = parseAttributes(arrayAttrs);
-      const items = [...(arrayBody ?? '').matchAll(ITEM_SCAN)].map(([, , value]) => value ?? '');
+      const items = [...(arrayBody ?? '').matchAll(ITEM_SCAN)].map(([, , value]) => unwrapAndroidQuotes(value ?? ''));
       if (attrs.name) parsed.push({ kind: 'string-array', name: attrs.name, attrs, items });
     }
   }
@@ -132,8 +132,8 @@ const attrString = (attrs: Record<string, string | undefined>): string =>
 
 /**
  * Android `values/strings.xml` (+ `plurals.xml`). Mirrors the old import: `translatable="false"`
- * disables the key, single-element resources parse fine, quotes are unwrapped by a processor before
- * the model sees them, and plural categories the source language lacks are seeded from `other`.
+ * disables the key, single-element resources parse fine, aapt quoting is unwrapped on the way in
+ * and restored on the way out, and plural categories the source language lacks are seeded from `other`.
  */
 export const androidXml = (options: AndroidXmlOptions): Adapter => {
   const fileOptions: FileAdapterOptions = { include: ['**/values/strings.xml', '**/values/plurals.xml'], ...options };
@@ -179,6 +179,7 @@ export const androidXml = (options: AndroidXmlOptions): Adapter => {
             });
           } else if (resource.kind === 'plurals') {
             const other = resource.items.find((item) => item.quantity === 'other');
+            const shared = pluralSpecifiers(resource.items.map((item) => item.value));
             const items = [
               ...resource.items,
               ...extraQuantities
@@ -191,7 +192,7 @@ export const androidXml = (options: AndroidXmlOptions): Adapter => {
                 key: compositeKey({ ...base, quantity: item.quantity }),
                 source: item.value,
                 tags,
-                meta: { ...base, quantity: item.quantity },
+                meta: { ...base, quantity: item.quantity, pluralSpecifiers: shared },
                 translatable,
                 targets: targetsFor((r) =>
                   r.kind === 'plurals' && r.name === resource.name

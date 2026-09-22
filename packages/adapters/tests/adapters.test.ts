@@ -42,7 +42,7 @@ describe('xcstrings adapter', () => {
     expect(resources.find((r) => JSON.parse(r.key).quantity === 'one')).toMatchObject({
       source: '%lld item',
       tags: ['ios', 'plural'],
-      meta: { filePath: 'Localizable.xcstrings', key: '%lld items', quantity: 'one', comment: 'Library count' },
+      meta: { filePath: 'Localizable.xcstrings', key: '%lld items', quantity: 'one', comment: 'Library count', pluralSpecifiers: ['%lld'] },
       targets: { de: '%lld Element' },
     });
     expect(resources.find((r) => r.source === 'Hello')?.targets).toEqual({ de: 'Hallo' });
@@ -91,18 +91,19 @@ describe('android adapter', () => {
     ]);
   });
 
-  test('pull: translatable flag, raw inner content, synthesized plural categories for target locales', async () => {
+  test('pull: translatable flag, aapt quotes unwrapped, synthesized plural categories for target locales', async () => {
     const { resources } = await androidXml({ root }).pull!({ project });
     const byKey = Object.fromEntries(resources.map((r) => [r.key, r]));
     const file = 'app/src/main/res/values/strings.xml';
     expect(resources.map((r) => JSON.parse(r.key).key)).not.toContain('commented_out');
     expect(byKey[compositeKey({ filePath: file, key: 'app_name' })]?.translatable).toBe(false);
-    expect(byKey[compositeKey({ filePath: file, key: 'quoted' })]?.source).toBe('"  Padded  "');
+    expect(byKey[compositeKey({ filePath: file, key: 'quoted' })]?.source).toBe('  Padded  ');
     expect(byKey[compositeKey({ filePath: file, key: 'with_xliff' })]?.source).toBe('Moved <xliff:g id="count" example="5">%1$d</xliff:g> files');
+    expect(byKey[compositeKey({ filePath: file, key: 'with_xliff' })]?.targets).toEqual({ de: 'Verschoben <xliff:g id="count" example="5">%1$d</xliff:g> Dateien \\"fett\\"' });
     expect(byKey[compositeKey({ filePath: file, key: 'voices', index: 1 })]?.source).toBe('Spanish');
     // Polish needs few/many; they are seeded from `other`, never from `one`.
     const few = byKey[compositeKey({ filePath: file, key: 'pages', quantity: 'few' })];
-    expect(few).toMatchObject({ source: '%1$d pages', tags: ['android', 'plural', 'synthesized'] });
+    expect(few).toMatchObject({ source: '%1$d pages', tags: ['android', 'plural', 'synthesized'], meta: { quantity: 'few', pluralSpecifiers: ['%1$d'] } });
   });
 
   test('push: writes values-<locale> files with escaping rules and only the locale\'s plural categories', async () => {
