@@ -2,7 +2,7 @@ import { appendFileSync } from 'node:fs';
 import { parseArgs } from 'node:util';
 import { type Adapter, type ApiResult, applyTranslations, createClient, importResources, type StatusCounts } from '@loqo/sdk';
 import { androidXml } from './android-xml';
-import { json } from './json';
+import { json, type JsonKeyOrder } from './json';
 import { xcstrings } from './xcstrings';
 
 /**
@@ -24,6 +24,7 @@ options
   --ignore <prefix,...>                    path prefixes to skip
   --locale-map <locale=file,...>           platform locale → file locale, e.g. zh-hans=zh-Hans
   --source <path> --target <path> --tags <tag,...>   json adapter
+  --sort <codepoint|preserve>              json adapter: written key order, default codepoint
   --project <slug>     or LOQO_PROJECT
   --base-url <url>     or LOQO_BASE_URL
   --api-key <key>      or LOQO_API_KEY
@@ -43,6 +44,12 @@ const pairs = (value: string | undefined): Record<string, string> | undefined =>
   return entries && Object.fromEntries(entries);
 };
 
+const keyOrder = (value: string | undefined): JsonKeyOrder | undefined => {
+  if (value === undefined) return undefined;
+  if (value !== 'codepoint' && value !== 'preserve') throw new Error(`--sort: expected codepoint or preserve, got "${value}"`);
+  return value;
+};
+
 export type CliOptions = {
   command: string;
   adapter?: string;
@@ -53,6 +60,7 @@ export type CliOptions = {
   source?: string;
   target?: string;
   tags?: string[];
+  sort?: JsonKeyOrder;
   project: string;
   baseUrl: string;
   apiKey: string;
@@ -74,6 +82,7 @@ export const parseCli = (argv: string[], env: Record<string, string | undefined>
       source: { type: 'string' },
       target: { type: 'string' },
       tags: { type: 'string' },
+      sort: { type: 'string' },
       project: { type: 'string' },
       'base-url': { type: 'string' },
       'api-key': { type: 'string' },
@@ -98,6 +107,7 @@ export const parseCli = (argv: string[], env: Record<string, string | undefined>
     source: values.source,
     target: values.target,
     tags: list(values.tags),
+    sort: keyOrder(values.sort),
     project: required('project', values.project ?? env.LOQO_PROJECT, 'LOQO_PROJECT'),
     baseUrl: required('base-url', values['base-url'] ?? env.LOQO_BASE_URL, 'LOQO_BASE_URL'),
     apiKey: required('api-key', values['api-key'] ?? env.LOQO_API_KEY, 'LOQO_API_KEY'),
@@ -116,7 +126,7 @@ export const adapterFrom = (options: CliOptions): Adapter => {
       return androidXml(files);
     case 'json':
       if (!options.source) throw new Error('--source is required for the json adapter');
-      return json({ root: options.root, source: options.source, target: options.target, localeMap: options.localeMap, tags: options.tags });
+      return json({ root: options.root, source: options.source, target: options.target, localeMap: options.localeMap, tags: options.tags, sort: options.sort });
     default:
       throw new Error(`--adapter must be xcstrings, android-xml or json (got "${options.adapter ?? ''}")`);
   }

@@ -2,9 +2,10 @@ import { describe, expect, test } from 'bun:test';
 import { cp, mkdir, mkdtemp, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { pulledTarget } from '@loqo/sdk';
+import { type PushResource, pulledTarget } from '@loqo/sdk';
 import { androidXml, parseAndroidResources } from '../src/android-xml';
 import { compositeKey, discoverFiles, globToRegExp } from '../src/files';
+import { json } from '../src/json';
 import { xcstrings } from '../src/xcstrings';
 
 const fixtures = join(import.meta.dir, 'fixtures');
@@ -135,5 +136,58 @@ describe('android adapter', () => {
     expect(pl).toContain('quantity="few"');
     expect(pl).toContain('quantity="many"');
     expect(de).not.toContain('quantity="few"');
+  });
+});
+
+describe('json adapter', () => {
+  const project = { slug: 'webapp', name: 'Webapp', sourceLocale: 'en', targetLocales: ['de', 'zh-hans'] };
+  const adapterAt = (root: string) =>
+    json({ root, source: 'public/locales/en/common.json', target: 'public/locales/{locale}/common.json', localeMap: { 'zh-hans': 'zh-Hans' } });
+
+  const target = (value: string) => ({ value, status: 'translated', origin: 'machine', pinned: false, native: false });
+
+  const bundle = async (root: string, locale: string, data: Record<string, string>) => {
+    await mkdir(join(root, `public/locales/${locale}`), { recursive: true });
+    await writeFile(join(root, `public/locales/${locale}/common.json`), JSON.stringify(data, null, 2));
+  };
+
+  test('pull: one resource per source key, carrying what the locale files already say', async () => {
+    const root = await scratch();
+    await bundle(root, 'en', { Zebra: 'Zebra', apple: 'apple' });
+    await bundle(root, 'de', { apple: 'Apfel', gone: 'Weg' });
+    const { resources } = await adapterAt(root).pull!({ project });
+    expect(resources).toEqual([
+      { key: 'Zebra', source: 'Zebra', tags: ['webapp'], meta: {}, targets: {} },
+      { key: 'apple', source: 'apple', tags: ['webapp'], meta: {}, targets: { de: 'Apfel' } },
+    ]);
+  });
+
+  test('push: keys stay in codepoint order, untranslated keys survive, the locale map picks the file', async () => {
+    const root = await scratch();
+    await bundle(root, 'en', { Zebra: 'Zebra', apple: 'apple' });
+    await bundle(root, 'de', { kept: 'Behalten' });
+    const resources: PushResource[] = [
+      { key: 'apple', source: 'apple', tags: ['webapp'], meta: {}, translatable: true, targets: { de: target('Apfel'), 'zh-hans': target('苹果') } },
+      { key: 'Zebra', source: 'Zebra', tags: ['webapp'], meta: {}, translatable: true, targets: { de: target('Zebra') } },
+    ];
+    expect(await adapterAt(root).push!({ project }, resources)).toEqual({
+      written: 3,
+      files: ['public/locales/de/common.json', 'public/locales/zh-Hans/common.json'],
+    });
+    expect(await Bun.file(join(root, 'public/locales/de/common.json')).text()).toBe('{\n  "Zebra": "Zebra",\n  "apple": "Apfel",\n  "kept": "Behalten"\n}\n');
+    expect(await Bun.file(join(root, 'public/locales/zh-Hans/common.json')).text()).toBe('{\n  "apple": "苹果"\n}\n');
+  });
+
+  test("push: `preserve` keeps the file's own order and appends what the source adds", async () => {
+    const root = await scratch();
+    await bundle(root, 'en', { zulu: 'zulu', alpha: 'alpha' });
+    await bundle(root, 'de', { zulu: 'Zulu', kept: 'Behalten' });
+    const adapter = json({ root, source: 'public/locales/en/common.json', target: 'public/locales/{locale}/common.json', sort: 'preserve' });
+    const resources: PushResource[] = [
+      { key: 'alpha', source: 'alpha', tags: ['webapp'], meta: {}, translatable: true, targets: { de: target('Alpha') } },
+      { key: 'zulu', source: 'zulu', tags: ['webapp'], meta: {}, translatable: true, targets: { de: target('Zulu') } },
+    ];
+    await adapter.push!({ project: { ...project, targetLocales: ['de'] } }, resources);
+    expect(await Bun.file(join(root, 'public/locales/de/common.json')).text()).toBe('{\n  "zulu": "Zulu",\n  "kept": "Behalten",\n  "alpha": "Alpha"\n}\n');
   });
 });

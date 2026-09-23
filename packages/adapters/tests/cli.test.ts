@@ -3,12 +3,12 @@ import { adapterFrom, parseCli } from '../src/cli';
 
 describe('loqo-sync', () => {
   test('flags become adapter options; the platform coordinates fall back to the environment', () => {
-    const options = parseCli(['request', '--adapter', 'android-xml', '--ignore', 'androidApp/src/demo', '--locale-map', 'zh-hans=zh-rCN,pt=pt-rBR', '--no-enqueue'], {
+    const options = parseCli(['request', '--adapter', 'android-xml', '--ignore', 'androidApp/src/demo', '--locale-map', 'zh-hans=zh-rCN,pt=pt-rBR', '--sort', 'preserve', '--no-enqueue'], {
       LOQO_PROJECT: 'android',
       LOQO_BASE_URL: 'https://translate.example',
       LOQO_API_KEY: 'loqo_x',
     });
-    expect(options).toMatchObject({ command: 'request', adapter: 'android-xml', root: '.', ignore: ['androidApp/src/demo'], localeMap: { 'zh-hans': 'zh-rCN', pt: 'pt-rBR' }, project: 'android', prune: true, enqueue: false });
+    expect(options).toMatchObject({ command: 'request', adapter: 'android-xml', root: '.', ignore: ['androidApp/src/demo'], localeMap: { 'zh-hans': 'zh-rCN', pt: 'pt-rBR' }, sort: 'preserve', project: 'android', prune: true, enqueue: false });
     expect(adapterFrom(options).name).toBe('android-xml');
     expect(adapterFrom({ ...options, adapter: 'xcstrings' }).name).toBe('xcstrings');
     expect(adapterFrom({ ...options, adapter: 'json', source: 'public/locales/en/common.json' }).name).toBe('json');
@@ -21,5 +21,6 @@ describe('loqo-sync', () => {
     expect(() => adapterFrom(options)).toThrow('--adapter must be');
     expect(() => adapterFrom({ ...options, adapter: 'json' })).toThrow('--source');
     expect(() => parseCli(['import', '--locale-map', 'broken', '--project', 'p', '--base-url', 'u', '--api-key', 'k'])).toThrow('--locale-map');
+    expect(() => parseCli(['import', '--sort', 'alphabetical', '--project', 'p', '--base-url', 'u', '--api-key', 'k'])).toThrow('--sort');
   });
 });

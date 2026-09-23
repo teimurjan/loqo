@@ -52,6 +52,10 @@ inputs:
     description: json adapter — comma-separated tags for every resource
     required: false
     default: ""
+  sort:
+    description: json adapter — written key order, codepoint (default) or preserve
+    required: false
+    default: ""
   since:
     description: import — only translations changed since this ISO-8601 instant
     required: false
@@ -130,6 +134,7 @@ runs:
         SOURCE: ${{ inputs.source }}
         TARGET: ${{ inputs.target }}
         TAGS: ${{ inputs.tags }}
+        SORT: ${{ inputs.sort }}
         SINCE: ${{ inputs.since }}
       run: |
         args=("$COMMAND" --root "$ROOT")
@@ -140,6 +145,7 @@ runs:
         [ -n "$SOURCE" ] && args+=(--source "$SOURCE")
         [ -n "$TARGET" ] && args+=(--target "$TARGET")
         [ -n "$TAGS" ] && args+=(--tags "$TAGS")
+        [ -n "$SORT" ] && args+=(--sort "$SORT")
         [ -n "$SINCE" ] && args+=(--since "$SINCE")
         bun "$CLI" "${args[@]}"
 
