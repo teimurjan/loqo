@@ -119,7 +119,7 @@ export type TranslationRow = {
   updatedAt: string;
 };
 
-export type TranslationsPage = { page: number; limit: number; hasMore: boolean; docs: TranslationRow[] };
+export type TranslationsPage = { page: number; limit: number; hasMore: boolean; cursor?: string | null; docs: TranslationRow[] };
 
 export type TranslationsQuery = {
   locale?: string;
@@ -128,6 +128,8 @@ export type TranslationsQuery = {
   /** Only targets changed after this instant — what a delta pull passes. */
   updatedSince?: Date | string;
   page?: number;
+  /** The previous page's `cursor`. Cheaper than `page` on a large project, and what a full pull should follow. */
+  cursor?: string;
   limit?: number;
 };
 

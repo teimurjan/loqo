@@ -3,7 +3,7 @@ import { and, eq, sql } from 'drizzle-orm';
 import type { ResolvedConfig } from '../src/config';
 import { brandTerms, defaultGuardKinds, defaultGuards } from '../src/core/guards';
 import { defaultProcessors } from '../src/core/processors';
-import { countTargets, listResources, listTranslations, scopeStatus } from '../src/core/resources/service';
+import { countTargets, decodeTranslationsCursor, listResources, listTranslations, scopeStatus } from '../src/core/resources/service';
 import { enqueueProject, syncProject } from '../src/core/resources/sync';
 import { createDb } from '../src/db/client';
 import { runMigrations } from '../src/db/migrate';
@@ -228,5 +228,49 @@ describe('one product at a time', () => {
     const after = await scopeStatus(db, scope);
     expect(after.counts).toEqual(before.counts);
     expect(after.digest).not.toBe(before.digest);
+  });
+});
+
+describe('paging translations', () => {
+  const paged = ['paged/1:a', 'paged/2:b', 'paged/3:c'].map((key) => ({ key, source: key, targets: { de: `${key}-de`, fr: `${key}-fr` } }));
+
+  test('a cursor walk returns every row once, in the order one big page has them', async () => {
+    await syncProject(deps, project, paged, { prune: false, enqueue: false });
+    const scope = { projectId: project.id, prefix: 'paged/' };
+    const whole = await listTranslations(db, { ...scope, limit: 100 });
+    expect(whole.docs).toHaveLength(6);
+    expect(whole.cursor).toBeNull();
+
+    const walked: string[] = [];
+    let cursor: string | null = null;
+    for (;;) {
+      const after = cursor ? decodeTranslationsCursor(cursor) : null;
+      const page = await listTranslations(db, { ...scope, limit: 2, ...(after ? { after } : {}) });
+      walked.push(...page.docs.map((row) => `${row.key}/${row.locale}`));
+      if (!page.hasMore) break;
+      cursor = page.cursor;
+    }
+    expect(walked).toEqual(whole.docs.map((row) => `${row.key}/${row.locale}`));
+    expect(new Set(walked).size).toBe(walked.length);
+  });
+
+  test('a cursor that is not one of ours is refused rather than silently ignored', () => {
+    expect(decodeTranslationsCursor('not-a-cursor')).toBeNull();
+    expect(decodeTranslationsCursor(Buffer.from('{"key":"a"}').toString('base64url'))).toBeNull();
+  });
+
+  test('a changed source rewrites the resource and re-pends its targets', async () => {
+    const summary = await syncProject(
+      deps,
+      project,
+      [{ key: 'paged/1:a', source: 'Renamed', tags: ['b', 'a'], meta: { comment: 'why' }, targets: {} }],
+      { prune: false, enqueue: false },
+    );
+    expect(summary).toMatchObject({ updated: 1, created: 0 });
+
+    const [row] = await db.select().from(resources).where(and(eq(resources.projectId, project.id), eq(resources.key, 'paged/1:a')));
+    expect(row).toMatchObject({ source: 'Renamed', tags: ['a', 'b'], meta: { comment: 'why' }, translatable: true });
+    const rows = await targetRows();
+    expect(rows['paged/1:a/de']).toMatchObject({ value: 'paged/1:a-de', status: 'pending' });
   });
 });

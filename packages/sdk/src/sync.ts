@@ -70,12 +70,17 @@ export const applyTranslations = async (
 
   const rows: TranslationRow[] = [];
   let latestUpdatedAt: string | null = null;
+  // Cursor first: page numbers make the platform re-walk every row it has already served. A platform
+  // that returns no cursor is an older one, and the page number carries the pull instead.
+  let cursor: string | undefined;
   for (let page = 1; ; page += 1) {
-    const result = await client.translations(slug, { locale: options.locale, prefix: options.prefix, updatedSince: options.updatedSince, page, limit: options.pageSize ?? 500 });
+    const query = { locale: options.locale, prefix: options.prefix, updatedSince: options.updatedSince, limit: options.pageSize ?? 500 };
+    const result = await client.translations(slug, cursor ? { ...query, cursor } : { ...query, page });
     if (!result.ok) return result;
     for (const row of result.data.docs) latestUpdatedAt = newest(latestUpdatedAt, row.updatedAt);
     rows.push(...result.data.docs);
     if (!result.data.hasMore) break;
+    cursor = result.data.cursor ?? undefined;
   }
 
   const resources = foldTranslations(rows);

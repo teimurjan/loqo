@@ -195,15 +195,35 @@ export type TranslationRow = {
   updatedAt: Date;
 };
 
+/** Where the next page picks up in `(key, locale)` order; opaque to the caller, which just hands it back. */
+export type TranslationsCursor = { key: string; locale: string };
+
+export const encodeTranslationsCursor = (row: TranslationsCursor): string =>
+  Buffer.from(JSON.stringify([row.key, row.locale])).toString('base64url');
+
+export const decodeTranslationsCursor = (cursor: string): TranslationsCursor | null => {
+  try {
+    const [key, locale] = JSON.parse(Buffer.from(cursor, 'base64url').toString('utf8')) as unknown[];
+    return typeof key === 'string' && typeof locale === 'string' ? { key, locale } : null;
+  } catch {
+    return null;
+  }
+};
+
 /**
  * What app repos' import steps page through: every translated value with its resource context.
  * `updatedSince` is inclusive, so a caller that passes back the newest `updatedAt` it saw sees that
  * row again rather than missing one that landed in the same millisecond.
+ *
+ * Page numbers are kept for small pulls and older clients, but a full import should follow `cursor`:
+ * `offset` makes the database walk every row it has already served, so a six-figure project's last
+ * pages cost seconds each, while the cursor starts each page at an index seek.
  */
 export const listTranslations = async (
   db: Db,
-  options: { projectId: string; locale?: string; prefix?: string; updatedSince?: Date; page: number; limit: number },
-): Promise<{ page: number; limit: number; hasMore: boolean; docs: TranslationRow[] }> => {
+  options: { projectId: string; locale?: string; prefix?: string; updatedSince?: Date; page?: number; limit: number; after?: TranslationsCursor },
+): Promise<{ page: number; limit: number; hasMore: boolean; cursor: string | null; docs: TranslationRow[] }> => {
+  const page = options.page ?? 1;
   const docs = await db
     .select({
       id: targets.id,
@@ -229,12 +249,18 @@ export const listTranslations = async (
         options.locale ? eq(targets.locale, options.locale) : undefined,
         options.prefix ? sql`starts_with(${resources.key}, ${options.prefix})` : undefined,
         options.updatedSince ? gte(targets.updatedAt, options.updatedSince) : undefined,
+        // The row comparison is the real condition; the redundant `key >=` is what the planner can use
+        // as a bound on `resources_project_key`, turning each page into an index seek instead of a sort.
+        options.after ? gte(resources.key, options.after.key) : undefined,
+        options.after ? sql`(${resources.key}, ${targets.locale}) > (${options.after.key}, ${options.after.locale})` : undefined,
       ),
     )
     .orderBy(asc(resources.key), asc(targets.locale))
     .limit(options.limit)
-    .offset((options.page - 1) * options.limit);
-  return { page: options.page, limit: options.limit, hasMore: docs.length === options.limit, docs };
+    .offset(options.after ? 0 : (page - 1) * options.limit);
+  const hasMore = docs.length === options.limit;
+  const last = docs.at(-1);
+  return { page, limit: options.limit, hasMore, cursor: hasMore && last ? encodeTranslationsCursor(last) : null, docs };
 };
 
 export type CountsQuery = {

@@ -84,6 +84,25 @@ describe('remote sync', () => {
     expect(new URL(calls[1]?.url ?? '').searchParams.get('prefix')).toBe('pages/1:');
   });
 
+  test('applyTranslations follows the cursor once the platform sends one', async () => {
+    const pages = [[row({})], [row({ key: 'pages/1:body', value: 'Text' })]];
+    const asked: string[] = [];
+    const client = createClient({
+      baseUrl: 'http://platform',
+      apiKey: 'k',
+      fetch: async (url) => {
+        asked.push(url);
+        if (url.endsWith('/api/projects/cms')) return Response.json(project);
+        const cursor = Number(new URL(url).searchParams.get('cursor') ?? 0);
+        return Response.json({ page: cursor + 1, limit: 500, hasMore: cursor + 1 < pages.length, cursor: String(cursor + 1), docs: pages[cursor] ?? [] });
+      },
+    });
+    const adapter = defineAdapter({ name: 'fake', push: async (_ctx, resources) => ({ written: resources.length }) });
+    expect(await applyTranslations(client, 'cms', adapter)).toMatchObject({ ok: true, data: { resources: 2 } });
+    expect(asked.at(-1)).toContain('cursor=1');
+    expect(asked.at(-1)).not.toContain('page=');
+  });
+
   test('counts asks for one grouping and passes the filters through', async () => {
     const { calls, client } = fakePlatform([[]]);
     const result = await client.counts('cms', { by: 'tag', tagPrefix: 'collection:' });

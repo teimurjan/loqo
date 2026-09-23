@@ -4,7 +4,7 @@ import { invite, listMembers, removeMember, setRole } from '../../core/members/s
 import type { PulledResource } from '../../core/model/types';
 import { createProject, deleteProject, getProject, listProjects, updateProject } from '../../core/projects/service';
 import { enqueueProject, syncProject } from '../../core/resources/sync';
-import { countTargets, listResources, listTranslations, scopeStatus } from '../../core/resources/service';
+import { countTargets, decodeTranslationsCursor, listResources, listTranslations, scopeStatus } from '../../core/resources/service';
 import { type MemberRole, memberRole, targetStatus } from '../../db/schema';
 import { requireProjectRole, visibleProjectIds } from '../authz';
 import { type AppContext, actorOf, type RequestContext, requireUser, route } from '../context';
@@ -181,18 +181,22 @@ export const projectRoutes = (ctx: AppContext) => {
     '/api/projects/:slug/translations': {
       GET: r<'/api/projects/:slug/translations'>(async (req, rc) => {
         const project = await requireProject(rc, req.params.slug, 'reader');
-        const query = parseQuery(
+        const { cursor, ...query } = parseQuery(
           req,
           z.object({
             locale: z.string().optional(),
             prefix: z.string().min(1).optional(),
             updatedSince: z.iso.datetime({ offset: true }).optional(),
             page: z.coerce.number().int().min(1).default(1),
+            /** The previous page's `cursor`; it replaces `page`, which makes the database re-walk what it already served. */
+            cursor: z.string().min(1).optional(),
             limit: z.coerce.number().int().min(1).max(1000).default(500),
           }),
         );
+        const after = cursor ? decodeTranslationsCursor(cursor) : null;
+        if (cursor && !after) throw new HttpError(400, 'Invalid cursor');
         return json(
-          await listTranslations(rc.db, { projectId: project.id, ...query, updatedSince: query.updatedSince ? new Date(query.updatedSince) : undefined }),
+          await listTranslations(rc.db, { projectId: project.id, ...query, after: after ?? undefined, updatedSince: query.updatedSince ? new Date(query.updatedSince) : undefined }),
         );
       }),
     },

@@ -1,10 +1,10 @@
-import { and, eq, inArray, ne, notInArray, or, sql } from 'drizzle-orm';
+import { and, eq, inArray, notInArray, type SQL, sql } from 'drizzle-orm';
 import type { ResolvedConfig } from '../../config';
-import type { Db } from '../../db/client';
-import { type Project, type Resource, resources, targets, type TargetStatus } from '../../db/schema';
+import type { Db, Tx } from '../../db/client';
+import { type Project, resources, targets, type TargetStatus } from '../../db/schema';
 import { pluralCategories } from '../model/locales';
 import { sourceRevisionOf } from '../model/revision';
-import { type PulledResource, type PulledTarget, pulledTarget } from '../model/types';
+import { type PulledResource, pulledTarget } from '../model/types';
 import { enqueueTargets } from '../queue/enqueue';
 import type { TranslateQueue } from '../queue/types';
 import { type ResourceScope, scopeConditions } from './scope';
@@ -127,13 +127,71 @@ const pruneScope = (options: SyncOptions, pulledCount: number) => {
   return options.prune && pulledCount > 0 ? sql`true` : null;
 };
 
-/** `native` marks the current value human-approved, so it also takes `origin: human` — as the UI toggle does. */
-const importedFlags = (target: PulledTarget) => {
-  if (!target.pinned && !target.native) return null;
-  return {
-    set: { ...(target.pinned ? { pinned: true } : {}), ...(target.native ? { native: true, origin: 'human' as const } : {}) },
-    unlessAlready: [...(target.pinned ? [eq(targets.pinned, false)] : []), ...(target.native ? [eq(targets.native, false)] : [])],
-  };
+const chunked = <T>(rows: T[], size = CHUNK): T[][] => {
+  const batches: T[][] = [];
+  for (let index = 0; index < rows.length; index += size) batches.push(rows.slice(index, index + size));
+  return batches;
+};
+
+/**
+ * A batch travels as one jsonb parameter and is joined back to its resource by key, so a whole
+ * import costs one statement per chunk rather than one per value — the difference between seconds
+ * and minutes once a project has six figures of targets.
+ */
+const batch = (rows: unknown[], columns: SQL): SQL => sql`jsonb_to_recordset(${JSON.stringify(rows)}::jsonb) as v(${columns})`;
+
+const ofProject = (project: Project): SQL => sql`join ${resources} r on r.project_id = ${project.id} and r.key = v.key`;
+
+type LegacyValue = { key: string; locale: string; value: string };
+
+/** Legacy values only ever fill a hole; once the platform owns a target, the store is downstream. */
+const fillLegacy = async (tx: Tx, project: Project, values: LegacyValue[]): Promise<string[]> => {
+  const { rows } = await tx.execute(sql`
+    update ${targets} t
+    set value = v.value, origin = 'legacy', status = 'translated', source_revision = r.source_revision, updated_at = now()
+    from ${batch(values, sql`key text, locale text, value text`)}
+    ${ofProject(project)}
+    where t.resource_id = r.id
+      and t.locale = v.locale
+      and t.value is null
+      and t.pinned = false
+      and t.status <> 'skipped'
+    returning t.id
+  `);
+  return rows.map((row) => row.id as string);
+};
+
+/** Flags only ever go on: the platform is where they come off. `native` also claims the value as human-approved. */
+const raiseFlag = async (tx: Tx, project: Project, pairs: { key: string; locale: string }[], flag: 'pinned' | 'native'): Promise<number> => {
+  const assignment = flag === 'pinned' ? sql`pinned = true` : sql`native = true, origin = 'human'`;
+  const stillOff = flag === 'pinned' ? sql`t.pinned = false` : sql`t.native = false`;
+  const { rowCount } = await tx.execute(sql`
+    update ${targets} t
+    set ${assignment}, updated_at = now()
+    from ${batch(pairs, sql`key text, locale text`)}
+    ${ofProject(project)}
+    where t.resource_id = r.id and t.locale = v.locale and ${stillOff}
+  `);
+  return rowCount ?? 0;
+};
+
+type ResourceUpdate = { id: string } & ReturnType<typeof normalize>;
+
+const updateResources = async (tx: Tx, updates: ResourceUpdate[]): Promise<void> => {
+  // jsonb_to_recordset matches its columns by name, so the payload spells them the way the table does.
+  const rows = updates.map(({ id, key, source, sourceRevision, tags, meta, translatable }) => ({ id, key, source, source_revision: sourceRevision, tags, meta, translatable }));
+  await tx.execute(sql`
+    update ${resources} r
+    set key = v.key,
+        source = v.source,
+        source_revision = v.source_revision,
+        tags = array(select jsonb_array_elements_text(v.tags)),
+        meta = v.meta,
+        translatable = v.translatable,
+        updated_at = now()
+    from ${batch(rows, sql`id uuid, key text, source text, source_revision text, tags jsonb, meta jsonb, translatable boolean`)}
+    where r.id = v.id
+  `);
 };
 
 /** `config` brings the guards; without it (a bare test), legacy values are imported unjudged. */
@@ -162,7 +220,7 @@ export const syncProject = async (
   );
   const seenKeys = new Set<string>();
   const toInsert: (typeof resources.$inferInsert)[] = [];
-  const toUpdate: { id: string; values: Partial<Resource> }[] = [];
+  const toUpdate: ResourceUpdate[] = [];
 
   for (const raw of pulled) {
     const next = normalize(raw);
@@ -180,20 +238,16 @@ export const syncProject = async (
       !sameStrings(current.tags, next.tags) ||
       !sameMeta(current.meta, next.meta);
     if (changed) {
-      toUpdate.push({ id: current.id, values: { ...next, updatedAt: new Date() } });
+      toUpdate.push({ id: current.id, ...next });
     } else {
       summary.unchanged += 1;
     }
   }
 
   await db.transaction(async (tx) => {
-    for (let index = 0; index < toInsert.length; index += CHUNK) {
-      await tx.insert(resources).values(toInsert.slice(index, index + CHUNK));
-    }
+    for (const rows of chunked(toInsert)) await tx.insert(resources).values(rows);
     summary.created = toInsert.length;
-    for (const { id, values } of toUpdate) {
-      await tx.update(resources).set(values).where(eq(resources.id, id));
-    }
+    for (const rows of chunked(toUpdate)) await updateResources(tx, rows);
     summary.updated = toUpdate.length;
 
     const scope = pruneScope(options, pulled.length);
@@ -214,39 +268,17 @@ export const syncProject = async (
       .map(([locale, target]) => ({ key: resource.key, locale, ...pulledTarget(target) })),
   );
   if (imported.length > 0) {
-    const ids = new Map(
-      (await db.select({ id: resources.id, key: resources.key, sourceRevision: resources.sourceRevision }).from(resources).where(eq(resources.projectId, project.id))).map(
-        (row) => [row.key, row],
-      ),
-    );
+    const legacy = imported.flatMap((entry) => (entry.value && entry.value.trim().length > 0 ? [{ key: entry.key, locale: entry.locale, value: entry.value }] : []));
+    const pinned = imported.filter((entry) => entry.pinned).map(({ key, locale }) => ({ key, locale }));
+    const native = imported.filter((entry) => entry.native).map(({ key, locale }) => ({ key, locale }));
+
     const filledIds: string[] = [];
     await db.transaction(async (tx) => {
-      for (const entry of imported) {
-        const resource = ids.get(entry.key);
-        if (!resource) continue;
-        const where = and(eq(targets.resourceId, resource.id), eq(targets.locale, entry.locale));
-        // Legacy values only ever fill a hole; once the platform owns a target, the store is downstream.
-        if (entry.value && entry.value.trim().length > 0) {
-          const filled = await tx
-            .update(targets)
-            .set({ value: entry.value, origin: 'legacy', status: 'translated', sourceRevision: resource.sourceRevision, updatedAt: new Date() })
-            .where(and(where, sql`${targets.value} is null`, eq(targets.pinned, false), ne(targets.status, 'skipped')))
-            .returning({ id: targets.id });
-          summary.legacyImported += filled.length;
-          filledIds.push(...filled.map((row) => row.id));
-        }
-        // Flags only ever go on: the platform is where they come off.
-        const flags = importedFlags(entry);
-        if (flags) {
-          const flagged = await tx
-            .update(targets)
-            .set({ ...flags.set, updatedAt: new Date() })
-            .where(and(where, or(...flags.unlessAlready)))
-            .returning({ id: targets.id });
-          if (entry.pinned) summary.pinned += flagged.length;
-        }
-      }
+      for (const rows of chunked(legacy)) filledIds.push(...(await fillLegacy(tx, project, rows)));
+      for (const rows of chunked(pinned)) summary.pinned += await raiseFlag(tx, project, rows, 'pinned');
+      for (const rows of chunked(native)) await raiseFlag(tx, project, rows, 'native');
     });
+    summary.legacyImported = filledIds.length;
     if (deps.config) summary.legacyRejected = await rejectLegacyFailures(db, deps.config, project, filledIds);
   }
 
