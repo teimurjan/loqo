@@ -1,12 +1,13 @@
 import { z } from 'zod';
 import { listAudit } from '../../core/audit/service';
-import { costByDimension, queueStatus, recentRuns, suspiciousTargets } from '../../core/ops/service';
+import { costByDimension, dailyCost, queueStatus, recentRuns, suspiciousTargets } from '../../core/ops/service';
 import { requireProjectRole, visibleProjectIds } from '../authz';
 import { type AppContext, type RequestContext, route } from '../context';
 import { getProject } from '../../core/projects/service';
 import { json, notFound, parseQuery } from '../http';
 
 const projectFilter = z.object({ project: z.string().optional() });
+const costFilter = projectFilter.extend({ from: z.coerce.date().optional(), to: z.coerce.date().optional() });
 
 /** `?project=slug` narrows to one project the caller can read; otherwise every project they belong to. */
 const projectScope = async (ctx: RequestContext, slug: string | undefined): Promise<string[]> => {
@@ -48,16 +49,14 @@ export const opsRoutes = (ctx: AppContext) => {
     },
     '/api/analytics/cost': {
       GET: r(async (req, rc) => {
-        const query = parseQuery(
-          req,
-          z.object({
-            groupBy: z.enum(['project', 'locale', 'layer', 'model', 'day']).default('project'),
-            from: z.coerce.date().optional(),
-            to: z.coerce.date().optional(),
-            project: z.string().optional(),
-          }),
-        );
+        const query = parseQuery(req, costFilter.extend({ groupBy: z.enum(['project', 'locale', 'layer', 'model', 'day']).default('project') }));
         return json(await costByDimension(rc.db, { ...query, projectIds: await projectScope(rc, query.project) }));
+      }),
+    },
+    '/api/analytics/cost/daily': {
+      GET: r(async (req, rc) => {
+        const query = parseQuery(req, costFilter.extend({ stackBy: z.enum(['project', 'locale', 'layer', 'model']).optional() }));
+        return json(await dailyCost(rc.db, { ...query, projectIds: await projectScope(rc, query.project) }));
       }),
     },
     '/api/analytics/runs': {

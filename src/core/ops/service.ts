@@ -1,18 +1,43 @@
-import { and, desc, eq, gte, inArray, lte, ne, sql } from 'drizzle-orm';
+import { and, asc, desc, eq, gte, inArray, lte, ne, sql } from 'drizzle-orm';
 import type { Db } from '../../db/client';
-import { costSummary, layerRuns, projects, resources, targets } from '../../db/schema';
+import { costSummary, layerRuns, projects, resources, type TargetStatus, targets } from '../../db/schema';
 import type { QueueCounts, TranslateQueue } from '../queue/types';
+
+const QUEUE_LIMIT = 500;
+export const SUSPICIOUS_LIMIT = 500;
+
+export type QueueItem = {
+  id: string;
+  resourceId: string;
+  projectSlug: string;
+  key: string;
+  locale: string;
+  status: TargetStatus;
+  source: string;
+  updatedAt: Date;
+};
 
 export type QueueStatus = {
   queue: QueueCounts | null;
   targets: Record<string, number>;
-  recentFailures: { id: string; locale: string; key: string; projectSlug: string; lastError: string | null; updatedAt: Date }[];
+  /** What the worker holds or is about to: in-flight targets first, then the longest waiting. */
+  items: QueueItem[];
+  recentFailures: {
+    id: string;
+    resourceId: string;
+    locale: string;
+    key: string;
+    projectSlug: string;
+    status: TargetStatus;
+    lastError: string | null;
+    updatedAt: Date;
+  }[];
 };
 
-/** `projectIds` narrows the target counts and failures; the queue totals are process-wide either way. */
+/** `projectIds` narrows the target counts, items and failures; the queue totals are process-wide either way. */
 export const queueStatus = async (db: Db, queue: TranslateQueue, projectIds?: string[]): Promise<QueueStatus> => {
   const scoped = projectIds ? inArray(resources.projectId, projectIds) : undefined;
-  const [counts, statusRows, failures] = await Promise.all([
+  const [counts, statusRows, items, failures] = await Promise.all([
     queue.counts(),
     db
       .select({ status: targets.status, total: sql<number>`count(*)::int` })
@@ -23,9 +48,28 @@ export const queueStatus = async (db: Db, queue: TranslateQueue, projectIds?: st
     db
       .select({
         id: targets.id,
+        resourceId: targets.resourceId,
+        projectSlug: projects.slug,
+        key: resources.key,
+        locale: targets.locale,
+        status: targets.status,
+        source: resources.source,
+        updatedAt: targets.updatedAt,
+      })
+      .from(targets)
+      .innerJoin(resources, eq(resources.id, targets.resourceId))
+      .innerJoin(projects, eq(projects.id, resources.projectId))
+      .where(and(inArray(targets.status, ['queued', 'translating']), scoped))
+      .orderBy(desc(sql`${targets.status} = 'translating'`), asc(targets.updatedAt))
+      .limit(QUEUE_LIMIT),
+    db
+      .select({
+        id: targets.id,
+        resourceId: targets.resourceId,
         locale: targets.locale,
         key: resources.key,
         projectSlug: projects.slug,
+        status: targets.status,
         lastError: targets.lastError,
         updatedAt: targets.updatedAt,
       })
@@ -39,6 +83,7 @@ export const queueStatus = async (db: Db, queue: TranslateQueue, projectIds?: st
   return {
     queue: counts,
     targets: Object.fromEntries(statusRows.map((row) => [row.status, row.total])),
+    items,
     recentFailures: failures,
   };
 };
@@ -77,7 +122,7 @@ export const suspiciousTargets = async (db: Db, projectIds?: string[]): Promise<
       ),
     )
     .orderBy(desc(targets.updatedAt))
-    .limit(500);
+    .limit(SUSPICIOUS_LIMIT);
 
 export type CostDimension = 'project' | 'locale' | 'layer' | 'model' | 'day';
 
@@ -99,10 +144,16 @@ const DIMENSION_COLUMN: Record<CostDimension, ReturnType<typeof sql>> = {
   day: sql`${costSummary.day}::text`,
 };
 
-export const costByDimension = async (
-  db: Db,
-  options: { groupBy: CostDimension; from?: Date; to?: Date; projectIds?: string[] },
-): Promise<CostRow[]> => {
+export type CostFilter = { from?: Date; to?: Date; projectIds?: string[] };
+
+const costWhere = (filter: CostFilter) =>
+  and(
+    filter.from ? gte(costSummary.createdAt, filter.from) : undefined,
+    filter.to ? lte(costSummary.createdAt, filter.to) : undefined,
+    filter.projectIds ? inArray(costSummary.projectId, filter.projectIds) : undefined,
+  );
+
+export const costByDimension = async (db: Db, options: CostFilter & { groupBy: CostDimension }): Promise<CostRow[]> => {
   const dimension = DIMENSION_COLUMN[options.groupBy];
   return db
     .select({
@@ -115,15 +166,30 @@ export const costByDimension = async (
       unpriced: sql<number>`count(*) filter (where ${costSummary.costUsd} is null and ${costSummary.error} is null)::int`,
     })
     .from(costSummary)
-    .where(
-      and(
-        options.from ? gte(costSummary.createdAt, options.from) : undefined,
-        options.to ? lte(costSummary.createdAt, options.to) : undefined,
-        options.projectIds ? inArray(costSummary.projectId, options.projectIds) : undefined,
-      ),
-    )
+    .where(costWhere(options))
     .groupBy(dimension)
     .orderBy(sql`sum(${costSummary.costUsd}) desc nulls last`);
+};
+
+export type CostStack = Exclude<CostDimension, 'day'>;
+
+export type DailyCostRow = { day: string; group: string | null; costUsd: number | null };
+
+/** Spend per day, split by `stackBy` when given; one row per day otherwise. */
+export const dailyCost = (db: Db, options: CostFilter & { stackBy?: CostStack }): Promise<DailyCostRow[]> => {
+  const day = sql<string>`${costSummary.day}::text`;
+  const dimension = options.stackBy ? DIMENSION_COLUMN[options.stackBy] : undefined;
+  const buckets = dimension ? [day, dimension] : [day];
+  return db
+    .select({
+      day: day.as('day'),
+      group: (dimension ? sql<string | null>`${dimension}` : sql<string | null>`null`).as('group'),
+      costUsd: sql<number | null>`sum(${costSummary.costUsd})::float`,
+    })
+    .from(costSummary)
+    .where(costWhere(options))
+    .groupBy(...buckets)
+    .orderBy(...buckets);
 };
 
 export const recentRuns = (db: Db, limit: number, projectIds?: string[]) =>

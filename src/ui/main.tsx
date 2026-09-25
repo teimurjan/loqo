@@ -5,12 +5,14 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router';
 import { Layout } from './components/layout';
 import { ApiError, UNAUTHORIZED_EVENT } from './lib/api';
 import { ME_KEY, MeProvider, useMeQuery } from './lib/auth';
+import { AuditPage } from './pages/audit';
+import { AnalyticsPage } from './pages/cost';
 import { LayersPage } from './pages/flow';
 import { LoginPage } from './pages/login';
-import { AnalyticsPage, AuditPage, QueuePage } from './pages/ops';
 import { ProjectPage } from './pages/project';
 import { ProjectSettingsPage } from './pages/project/settings';
 import { ProjectsPage } from './pages/projects';
+import { QueuePage } from './pages/queue';
 import { ResourcePage } from './pages/resource';
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false, staleTime: 2000 } } });

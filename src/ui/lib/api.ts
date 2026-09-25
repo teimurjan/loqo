@@ -2,7 +2,7 @@ import type { ApiKeyPublic } from '../../core/api-keys/service';
 import type { GuardRuleInput } from '../../core/guards/rules';
 import type { LayerInput, OverrideInput, PromptInput, PromptWithVersion } from '../../core/layers/service';
 import type { MemberWithUser, Membership } from '../../core/members/service';
-import type { CostDimension, CostRow, QueueStatus, SuspiciousTarget } from '../../core/ops/service';
+import type { CostDimension, CostRow, CostStack, DailyCostRow, QueueStatus, SuspiciousTarget } from '../../core/ops/service';
 import type { ProjectInput, ProjectWithCounts } from '../../core/projects/service';
 import type { ResourceDetail, ResourceListItem } from '../../core/resources/service';
 import type { FlowExplain } from '../../core/scenarios/flow';
@@ -127,5 +127,6 @@ export const api = {
   queue: (project?: string) => request<QueueStatus>('GET', `/api/queue${query({ project })}`),
   suspicious: (project?: string) => request<SuspiciousTarget[]>('GET', `/api/ops/suspicious${query({ project })}`),
   cost: (groupBy: CostDimension, project?: string) => request<CostRow[]>('GET', `/api/analytics/cost${query({ groupBy, project })}`),
+  costDaily: (stackBy?: CostStack, project?: string) => request<DailyCostRow[]>('GET', `/api/analytics/cost/daily${query({ stackBy, project })}`),
   audit: (limit = 100, project?: string) => request<AuditEntry[]>('GET', `/api/audit${query({ limit, project })}`),
 };
